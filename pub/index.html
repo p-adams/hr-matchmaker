@@ -7,12 +7,12 @@
     <body>
         <div id="app" class="container">
             <div class="jumbotron">
-                <label>Login as: </label>
+                <label>Login as: {{role}}</label>
                 <div class="radio">
-                    <label><input type="radio">Employer</label>
+                    <label><input type="radio" v-model="role" value="employer" name="role">Employer</label>
                 </div>
                 <div class="radio">
-                    <label><input type="radio">Job Seeker</label>
+                    <label><input type="radio" v-model="role" value="seeker" name="role">Job Seeker</label>
                 </div>
             </div>
             <div v-if="!logged" class="jumbotron">

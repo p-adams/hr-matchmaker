@@ -6,7 +6,8 @@ new Vue({
         username: '',
         password: '',
         logged: false,
-        user: ''
+        user: '',
+        role: ''
     },
     methods: {
         login(){
