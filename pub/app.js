@@ -2,7 +2,7 @@ var socket = io();
 
 
 Vue.component('register', {
-    props: ['frst', 'lst', 'usr', 'pass', 'slct', 'user'],
+    props: ['frst', 'lst', 'usr', 'pass', 'slct'],
     template: "#register",
     created(){
         console.log(this.user)
@@ -14,7 +14,7 @@ Vue.component('register', {
             createUsr: this.usr,
             createPass: this.pass,
             selected: this.slct,
-            confirmUser: this.user
+            confirmUser: false
         }
     },
     methods: {
@@ -33,10 +33,13 @@ Vue.component('register', {
     }   
 })
 
+Vue.component('login', {
+    template: '#login'
+})
+
 new Vue({
     el: "#app",
     data: {
-        msg: 'Meow',
         firstname: '',
         lastname: '',
         createUsr: '',
@@ -44,8 +47,10 @@ new Vue({
         selected: 'Select',
         username: '',
         password: '',
-        logged: false,
-        user: false,
+        log: false,
+        register: false,
+        role: ''
+        
     },
     methods: {
         login(){
@@ -55,6 +60,20 @@ new Vue({
             socket.emit('login', {usr: username, pass: password})
             username=''
             password=''
+        },
+        select(e){
+            var val = e.currentTarget.value
+            if(val === "login"){
+                this.log=true        
+            }
+            else if(val === 'create'){
+                this.register=true
+            }
+        }
+    },
+    computed: {
+        hide(){
+           if(this.register||this.log)return true
         }
     },
     created(){

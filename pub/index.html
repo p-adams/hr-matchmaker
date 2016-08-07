@@ -7,26 +7,44 @@
     </head>
     <body>
         <div id="app" class="container">
+ 
+            <div v-if="!hide" class="jumbotron">
+                <h3>Welcome to HR Matchmaker</h3>
+                <h5>Like Match.com but for job seekers and employers</h5>
+              <label>Selected: {{role}}</label>
+            <div class="radio">
+                    <label><input type="radio"
+                                  v-model="role"
+                                  value="login"
+                                  name="role"
+                                  @change="select"
+                            >Login
+                    </label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio"
+                                  v-model="role"
+                                  value="create"
+                                  name="role"
+                                  @change="select"
+                            >Create Account
+                    </label>
+                </div>
+            </div>
 
-            <register :frst="firstname"
+        
+            <register v-if="register" :frst="firstname"
                       :lst="lastname"
                       :usr="createUsr"
                       :pass="createPass"
                       :slct="selected"
-                      :user="user"
+                      
             >
             </register>
-         
+            <login v-if="log"></login>
             
         </div>
 
-        <template id="login">
-            <div class="jumbotron">
-                <input type="text" class="form-control" v-model="username" placeholder="username...">
-                <input type="password" class="form-control" v-model="password" placeholder="password...">
-                <button class="btn btn-primary" @click="login">Login</button>
-            </div>
-        </template>
 
         <template id="register">
             <div v-if="!confirmUser" class="jumbotron">
@@ -46,8 +64,18 @@
                 </div>
                 <button class="btn btn-primary" @click="register">Create Account</button>
             </div>
-            <div>
-                <login></login>
+            
+                
+            
+        </template>
+
+        <template id="login">
+            <div class="jumbotron">
+                <h5>Enter username and password</h5>
+                <h6>Do not have an account? <a href="#">Create account</a></h6>
+                <input type="text" class="form-control" v-model="username" placeholder="username...">
+                <input type="password" class="form-control" v-model="password" placeholder="password...">
+                <button class="btn btn-primary" @click="login">Login</button>
             </div>
         </template>
 
