@@ -1,0 +1,11 @@
+.form-control{
+    width: 300px;
+    margin-top: 10px;
+}
+#sel1{
+    width: 150px;
+}
+label{
+    margin-top: 10px;
+    font-size: 12px;
+}

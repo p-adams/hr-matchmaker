@@ -7,11 +7,16 @@ var express = require("express"),
 app.use(express.static("pub"));
 
 var employers = []
+var seekers = []
 
 var addEmployer = (name, password)=> {
     var employer = {name: name, password: password}
     employers.push(employer)
-    console.log(employers.length)
+}
+
+var registerNewUser=(firstname, lastname, username, password, selected)=>{
+    var newUser = {f: firstname, l: lastname, u: username, p: password, s: selected}
+    console.log(newUser.f)
 }
 
 io.on('connection', (socket) => {
@@ -19,8 +24,13 @@ io.on('connection', (socket) => {
 
     socket.on('login', (login)=>{
         addEmployer(login.usr, login.pass)
-        socket.emit('login', login)
+        io.emit('login', login)
     })
+
+    socket.on('register', (data)=>{
+        registerNewUser(data.f, data.l, data.u, data.p, data.s)
+    })
+
  
     socket.on('disconnect', (socket) => {
        console.log('someone left the server'); 
