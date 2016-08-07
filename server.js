@@ -9,25 +9,34 @@ app.use(express.static("pub"));
 var employers = []
 var seekers = []
 
-var addEmployer = (name, password)=> {
+var login = (name, password)=> {
     var employer = {name: name, password: password}
     employers.push(employer)
 }
 
-var registerNewUser=(firstname, lastname, username, password, selected)=>{
+var registerNewUser= (firstname, lastname, username, password, selected)=>{
     var newUser = {f: firstname, l: lastname, u: username, p: password, s: selected}
-    console.log(newUser.f)
+    if(newUser.s==="Job Seeker"){
+        seekers.push(newUser)
+    }
+    else if(newUser.s==="Employer"){
+        employers.push(newUser)
+    }
+    for(p in newUser){
+        console.log(newUser[p], seekers.length, employers.length)
+    }
 }
 
 io.on('connection', (socket) => {
     console.log('Someone connected to server');
 
     socket.on('login', (login)=>{
-        addEmployer(login.usr, login.pass)
+        login(login.usr, login.pass)
         io.emit('login', login)
     })
 
     socket.on('register', (data)=>{
+
         registerNewUser(data.f, data.l, data.u, data.p, data.s)
     })
 

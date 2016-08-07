@@ -18,6 +18,13 @@ Vue.component('register', {
         }
     },
     methods: {
+        clearForm(){
+            this.firstname = ''
+            this.lastname = ''
+            this.createUsr = ''
+            this.createPass = ''
+            this.selected = ''
+        },
         register(){
             socket.emit('register', {
                 f: this.firstname,
@@ -26,6 +33,7 @@ Vue.component('register', {
                 p: this.createPass,
                 s: this.selected
             })
+            this.clearForm()
         },
         logUser(){
             this.confirmUser = true
