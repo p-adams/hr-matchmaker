@@ -6,6 +6,15 @@
     </head>
     <body>
         <div id="app" class="container">
+            <div class="jumbotron">
+                <label>Login as: </label>
+                <div class="radio">
+                    <label><input type="radio">Employer</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio">Job Seeker</label>
+                </div>
+            </div>
             <div v-if="!logged" class="jumbotron">
             <input type="text" class="form-control" v-model="username" placeholder="username...">
             <input type="password" class="form-control" v-model="password" placeholder="password...">
