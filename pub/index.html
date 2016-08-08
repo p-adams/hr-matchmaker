@@ -32,22 +32,28 @@
                 </div>
             </div>
 
-        
-            <register v-if="register"
+            <div v-if="showReg">
+            <register 
                       :frst="firstname"
                       :lst="lastname"
                       :usr="createUsr"
                       :pass="createPass"
                       :slct="selected"
+                      :f="failure"
+                      :st="sharedState"
             >
             </register>
-            <login v-if="log"
+          
+            </div>
+            <login v-if="showLog"
                    :usr="username"
                    :pass="password"
+                   :f="failure"
+                   :st="sharedState"
             >   
             </login>
 
-            <div class="jumbotron">
+            <div v-if="main" class="jumbotron">
                 <h3>Welcome {{username}}</h3>
             </div>
             
@@ -55,9 +61,9 @@
 
 
         <template id="register">
-            <div class="jumbotron">
+            <div>
+            <div v-if="!confirmUser" class="jumbotron">
                 <h5>Fill out form below to create an account</h5>
-                <h6>Already a user? <a href="#" @click="logUser">login</a></h6>
                 <input type="text" class="form-control" v-model="firstname" placeholder="firstname..." autofocus>
                 <input type="text" class="form-control" v-model="lastname" placeholder="lastname...">
                 <input type="text" class="form-control" v-model="createUsr" placeholder="create username...">
@@ -71,12 +77,11 @@
                     </select>
                 </div>
                 <h6 v-if="failure" id="failure">*Username taken or account exists</h6>
-                <button class="btn btn-primary" @click="register">Create Account</button>
-                
+                <h6>Already a user? <a href="#" @click="logUser">login</a></h6>
+                <button class="btn btn-primary" @click="register">Create Account</button> 
             </div>
-            
-                
-            
+            <login v-if="confirmUser"></login>
+            </div>      
         </template>
 
         <template id="login">
