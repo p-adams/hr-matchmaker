@@ -33,15 +33,19 @@
             </div>
 
         
-            <register v-if="register" :frst="firstname"
+            <register v-if="register"
+                      :frst="firstname"
                       :lst="lastname"
                       :usr="createUsr"
                       :pass="createPass"
                       :slct="selected"
-                      
             >
             </register>
-            <login v-if="log"></login>
+            <login v-if="log"
+                   :usr="username"
+                   :pass="password"
+            >   
+            </login>
             
         </div>
 

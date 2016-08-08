@@ -40,7 +40,13 @@ io.on('connection', (socket) => {
     console.log('Someone connected to server');
 
     socket.on('login', (login)=>{
-        login(login.usr, login.pass)
+        if(userExists(users, login.u, login.p)){
+            io.emit('login-success', login)
+            console.log('You are a user')
+        }else{
+            console.log('You are not a user')
+            io.emit('login-failure', login)
+        }
         io.emit('login', login)
     })
 

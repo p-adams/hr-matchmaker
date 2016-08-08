@@ -42,7 +42,22 @@ Vue.component('register', {
 })
 
 Vue.component('login', {
-    template: '#login'
+    props: ['usr', 'pass'],
+    template: '#login',
+    data(){
+        return{
+            username: this.usr,
+            password: this.pass
+        }
+    },
+    methods: {
+        login(){
+            //this.logged = true
+            socket.emit('login', {u: this.username, p: this.password})
+            this.username=''
+            this.password=''
+        },
+    }
 })
 
 new Vue({
@@ -61,14 +76,6 @@ new Vue({
         
     },
     methods: {
-        login(){
-            var username = this.username
-            var password = this.password
-            this.logged = true
-            socket.emit('login', {usr: username, pass: password})
-            username=''
-            password=''
-        },
         select(e){
             var val = e.currentTarget.value
             if(val === "login"){
@@ -81,7 +88,7 @@ new Vue({
     },
     computed: {
         hide(){
-           if(this.register||this.log)return true
+           if( this.register || this.log) return true
         }
     },
     created(){
