@@ -39,8 +39,8 @@ var registerNewUser= (firstname, lastname, username, password, selected)=>{
         }
     }
     else if(newUser.s==="Employer"){
-          if(!userExists(seekers, username, password) && !usernameTaken(seekers, username)){
-            seekers.push(newUser)
+          if(!userExists(employers, username, password) && !usernameTaken(employers, username)){
+            employers.push(newUser)
         }else{
             console.log('Already a user or username taken')
         }
