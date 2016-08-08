@@ -4,7 +4,8 @@ var store = {
     state: {
         registered: false,
         logged: false,
-        confirmUser: false
+        confirmUser: false,
+        failure: false,
     }
 }
 Vue.component('register', {
@@ -14,7 +15,7 @@ Vue.component('register', {
         //console.log(this.registered.state.registered)
         var self = this
         socket.on('failure', (data)=>{
-            self.failure = true
+            self.failure.state.failure = true
             var userDetails = _.mapValues(data , function(d) { return d; });
         })
     },
@@ -27,7 +28,7 @@ Vue.component('register', {
             createPass: this.pass,
             selected: this.slct,
             confirmUser: false,
-            failure: this.f,
+            failure: this.st,
             registered: this.st
         }
     },
@@ -49,17 +50,17 @@ Vue.component('register', {
                 s: this.selected
             })
             this.clearForm()
-            console.log('failure:', this.failure)
+            console.log('failure:', this.failure.state.failure)
+
+            if(!this.failure.state.failure){
+                this.registered.state.registered = true
             console.log('reg:', this.registered.state.registered)
-            if(this.failure){
-            this.registered.state.registered = true
             }
            
             
         },
         logUser(){
-            this.confirmUser = true
-            console.log(this.confirmUser)
+           
         }
     }
 })
@@ -70,7 +71,7 @@ Vue.component('login', {
     created(){
         var self = this
         socket.on('login-failure', (data)=>{
-            self.failure = true
+            self.failure.state.failure = true
         })
         
     },
@@ -78,7 +79,7 @@ Vue.component('login', {
         return{
             username: this.usr,
             password: this.pass,
-            failure: this.f,
+            failure: this.st,
             logged: this.st,
             confirmUser: false
         }
@@ -88,12 +89,12 @@ Vue.component('login', {
             socket.emit('login', {u: this.username, p: this.password})
             this.username=''
             this.password=''
-            if(this.failure){
+            if(this.failure.state.failure){
                 this.logged.state.logged = true
             }
         },
         logUser(){
-            this.confirmUser = true
+           
         }
     }
 })
@@ -111,9 +112,7 @@ new Vue({
         password: '',
         log: false,
         register: false,
-        role: '',
-        failure: '',
-        
+        role: '',    
     },
     methods: {
         select(e){
@@ -131,12 +130,12 @@ new Vue({
            if(this.register || this.log) return true
         },
         showReg(){ 
-            if(this.register && !this.sharedState.state.registered){
+            if(this.register && !this.sharedState.state.registered && !this.sharedState.state.failure){
                 return true
             }     
         },
         showLog(){
-            if(this.log && !this.sharedState.state.logged)return true
+            if(this.log && !this.sharedState.state.logged && !this.sharedState.state.failure)return true
         },
         main(){
             if(this.hide && !this.showReg && !this.showLog)return true

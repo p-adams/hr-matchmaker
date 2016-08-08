@@ -39,7 +39,7 @@
                       :usr="createUsr"
                       :pass="createPass"
                       :slct="selected"
-                      :f="failure"
+                      
                       :st="sharedState"
             >
             </register>
@@ -48,7 +48,7 @@
             <login v-if="showLog"
                    :usr="username"
                    :pass="password"
-                   :f="failure"
+                 
                    :st="sharedState"
             >   
             </login>
@@ -76,7 +76,7 @@
                         <option>Employer</option>
                     </select>
                 </div>
-                <h6 v-if="failure" id="failure">*Username taken or account exists</h6>
+                <h6 v-if="!failure" id="failure">*Username taken or account exists</h6>
                 <h6>Already a user? <a href="#" @click="logUser">login</a></h6>
                 <button class="btn btn-primary" @click="register">Create Account</button> 
             </div>
@@ -90,7 +90,7 @@
                 <h5>Enter username and password</h5>
                 <input type="text" class="form-control" v-model="username" placeholder="username...">
                 <input type="password" class="form-control" v-model="password" placeholder="password...">
-                 <h6 v-if="failure" id="failure">*Account does not exist</h6>
+                 <h6 v-if="!failure" id="failure">*Account does not exist</h6>
                  <h6>Do not have an account? <a href="#" @click="logUser">Create account</a></h6>
                 <button class="btn btn-primary" @click="login">Login</button>
             </div>
