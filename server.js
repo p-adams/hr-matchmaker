@@ -6,8 +6,8 @@ var express = require("express"),
     io = socketio(server);
 app.use(express.static("pub"));
 
-var employers = []
-var seekers = []
+
+var users = []
 
 var login = (name, password)=> {
     var employer = {name: name, password: password}
@@ -30,23 +30,9 @@ var userExists=(arr, username, password)=>{
 
 var registerNewUser= (firstname, lastname, username, password, selected)=>{
     var newUser = {f: firstname, l: lastname, u: username, p: password, s: selected}
-    
-    if(newUser.s==="Job Seeker"){
-        if(!userExists(seekers, username, password) && !usernameTaken(seekers, username)){
-            seekers.push(newUser)
-        }else{
-            console.log('Already a user or username taken')
-        }
-    }
-    else if(newUser.s==="Employer"){
-          if(!userExists(employers, username, password) && !usernameTaken(employers, username)){
-            employers.push(newUser)
-        }else{
-            console.log('Already a user or username taken')
-        }
-    }
+    users.push(newUser)
     for(p in newUser){
-        console.log(newUser[p], seekers.length, employers.length)
+        console.log( newUser[p], users.length)
     }
 }
 
@@ -59,8 +45,14 @@ io.on('connection', (socket) => {
     })
 
     socket.on('register', (data)=>{
-
-        registerNewUser(data.f, data.l, data.u, data.p, data.s)
+        if(!userExists(users, data.u, data.p)&&!usernameTaken(users,data.u)){
+            registerNewUser(data.f, data.l, data.u, data.p, data.s)
+            io.emit('register', data)
+        }
+        else{
+            console.log('User already exists or username already taken')
+            io.emit('failure', data)
+        }        
     })
 
  
