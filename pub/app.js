@@ -10,7 +10,7 @@ Vue.component('register', {
     props: ['frst', 'lst', 'usr', 'pass', 'slct', 'f', 'st'],
     template: "#register",
     created(){
-        console.log(this.registered.state.registered)
+        //console.log(this.registered.state.registered)
         var self = this
         socket.on('failure', (data)=>{
             self.failure = true
@@ -75,7 +75,8 @@ Vue.component('login', {
             username: this.usr,
             password: this.pass,
             failure: this.f,
-            logged: this.st
+            logged: this.st,
+            confirmUser: false
         }
     },
     methods: {
@@ -87,6 +88,9 @@ Vue.component('login', {
                 this.logged.state.logged = true
             }
         },
+        logUser(){
+            this.confirmUser = true
+        }
     }
 })
 
