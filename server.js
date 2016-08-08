@@ -14,13 +14,36 @@ var login = (name, password)=> {
     employers.push(employer)
 }
 
+var findUser=(user, username, password)=>{
+    return user.u === username && user.p === password
+}
+
+var usernameTaken=(arr, username)=>{
+     return arr.filter(function(e) { return e.u == username}).length > 0
+}
+
+var userExists=(arr, username, password)=>{
+    var isUser = arr.filter(function(e) { return e.u == username}).length > 0
+    var isPass = arr.filter(function(e) { return e.p == password}).length > 0
+    return isUser&&isPass   
+}
+
 var registerNewUser= (firstname, lastname, username, password, selected)=>{
     var newUser = {f: firstname, l: lastname, u: username, p: password, s: selected}
+    
     if(newUser.s==="Job Seeker"){
-        seekers.push(newUser)
+        if(!userExists(seekers, username, password) && !usernameTaken(seekers, username)){
+            seekers.push(newUser)
+        }else{
+            console.log('Already a user or username taken')
+        }
     }
     else if(newUser.s==="Employer"){
-        employers.push(newUser)
+          if(!userExists(seekers, username, password) && !usernameTaken(seekers, username)){
+            seekers.push(newUser)
+        }else{
+            console.log('Already a user or username taken')
+        }
     }
     for(p in newUser){
         console.log(newUser[p], seekers.length, employers.length)
