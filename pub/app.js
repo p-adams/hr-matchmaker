@@ -3,7 +3,8 @@ var socket = io();
 var store = {
     state: {
         registered: false,
-        logged: false
+        logged: false,
+        confirmUser: false
     }
 }
 Vue.component('register', {
@@ -48,6 +49,8 @@ Vue.component('register', {
                 s: this.selected
             })
             this.clearForm()
+            console.log('failure:', this.failure)
+            console.log('reg:', this.registered.state.registered)
             if(this.failure){
             this.registered.state.registered = true
             }
@@ -56,6 +59,7 @@ Vue.component('register', {
         },
         logUser(){
             this.confirmUser = true
+            console.log(this.confirmUser)
         }
     }
 })
