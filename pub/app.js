@@ -42,7 +42,8 @@ Vue.component('register', {
             })
             this.clearForm()
             
-        },
+        },//logUser in order to see if user already has account
+        //allows for escape to login menu
         logUser(){
             this.confirmUser = true
         }
