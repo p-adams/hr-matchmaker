@@ -10,7 +10,7 @@ Vue.component('register', {
     props: ['frst', 'lst', 'usr', 'pass', 'slct', 'f', 'st'],
     template: "#register",
     created(){
-        console.log(this.registered.state.registered)
+       
         var self = this
         socket.on('failure', (data)=>{
             self.failure = true
@@ -26,7 +26,7 @@ Vue.component('register', {
             createPass: this.pass,
             selected: this.slct,
             confirmUser: false,
-            failure: this.f,
+            failure: false,
             registered: this.st
         }
     },
@@ -39,7 +39,7 @@ Vue.component('register', {
             this.selected = ''
         },
         register(){
-            
+           
             socket.emit('register', {
                 f: this.firstname,
                 l: this.lastname,
@@ -48,8 +48,11 @@ Vue.component('register', {
                 s: this.selected
             })
             this.clearForm()
+            console.log('h',this.failure)
+            if(this.failure){
             this.registered.state.registered = true
-           
+            
+            }
             
         },//logUser in order to see if user already has account
         //allows for escape to login menu
@@ -120,19 +123,17 @@ new Vue({
            if(this.register || this.log) return true
         },
         showReg(){ 
-            if(this.register && this.sharedState.state.registered){
-                return true
-            }     
+            if(this.register && !this.sharedState.state.registered)return true  
         },
         showLog(){
-            if(this.log && this.sharedState.state.logged)return true
+            if(this.log && !this.sharedState.state.logged)return true
         },
         main(){
-            if(!this.hide && this.showLog && !this.showReg)return true
+            if(!this.showReg)return true
         }
     },
     created(){
-     
+        console.log(this.sharedState.state.registered)
         var self = this
         socket.on('register', (data)=>{
             self.username = data.u
