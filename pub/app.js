@@ -5,7 +5,10 @@ Vue.component('register', {
     props: ['frst', 'lst', 'usr', 'pass', 'slct'],
     template: "#register",
     created(){
-        console.log(this.user)
+        var self = this
+        socket.on('failure', ()=>{
+            self.failure = true
+        })
     },
     data(){
         return{
@@ -14,7 +17,8 @@ Vue.component('register', {
             createUsr: this.usr,
             createPass: this.pass,
             selected: this.slct,
-            confirmUser: false
+            confirmUser: false,
+            failure: false,
         }
     },
     methods: {
@@ -25,7 +29,8 @@ Vue.component('register', {
             this.createPass = ''
             this.selected = ''
         },
-        register(){
+        register(e){
+            
             socket.emit('register', {
                 f: this.firstname,
                 l: this.lastname,
@@ -34,6 +39,7 @@ Vue.component('register', {
                 s: this.selected
             })
             this.clearForm()
+            
         },
         logUser(){
             this.confirmUser = true
@@ -52,7 +58,6 @@ Vue.component('login', {
     },
     methods: {
         login(){
-            //this.logged = true
             socket.emit('login', {u: this.username, p: this.password})
             this.username=''
             this.password=''
@@ -88,14 +93,14 @@ new Vue({
     },
     computed: {
         hide(){
-           if( this.register || this.log) return true
+           if(this.register || this.log) return true
         }
     },
     created(){
         var self = this
-        socket.on('login', (login)=>{
-            self.user = login.usr
-            console.log(login.usr, login.pass)
+        socket.on('register', (data)=>{
+            self.username = data.u
+            console.log(data.u, data.p)
         })
     }
 })

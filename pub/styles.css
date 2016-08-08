@@ -9,3 +9,7 @@ label{
     margin-top: 10px;
     font-size: 12px;
 }
+#failure{
+    color: darkred;
+    font-weight: bolder;
+}
