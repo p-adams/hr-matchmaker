@@ -47,7 +47,6 @@ io.on('connection', (socket) => {
             console.log('You are not a user')
             io.emit('login-failure', login)
         }
-        io.emit('login', login)
     })
 
     socket.on('register', (data)=>{
