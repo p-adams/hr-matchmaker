@@ -6,12 +6,14 @@ Vue.component('register', {
     template: "#register",
     created(){
         var self = this
-        socket.on('failure', ()=>{
+        socket.on('failure', (data)=>{
             self.failure = true
+            var userDetails = _.mapValues(data , function(d) { return d; });
         })
     },
     data(){
         return{
+            users:[],
             firstname: this.frst,
             lastname: this.lst,
             createUsr: this.usr,
@@ -44,16 +46,23 @@ Vue.component('register', {
         logUser(){
             this.confirmUser = true
         }
-    }   
+    }
 })
 
 Vue.component('login', {
     props: ['usr', 'pass'],
     template: '#login',
+    created(){
+        var self = this
+        socket.on('login-failure', (data)=>{
+            self.failure = true
+        })
+    },
     data(){
         return{
             username: this.usr,
-            password: this.pass
+            password: this.pass,
+            failure: false,
         }
     },
     methods: {
@@ -101,6 +110,9 @@ new Vue({
         socket.on('register', (data)=>{
             self.username = data.u
             console.log(data.u, data.p)
+        })
+        socket.on('login-success', (data)=>{
+            self.username = data.u
         })
     }
 })

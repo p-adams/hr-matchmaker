@@ -72,6 +72,7 @@
                 </div>
                 <h6 v-if="failure" id="failure">*Username taken or account exists</h6>
                 <button class="btn btn-primary" @click="register">Create Account</button>
+                
             </div>
             
                 
@@ -84,12 +85,14 @@
                 <h6>Do not have an account? <a href="#">Create account</a></h6>
                 <input type="text" class="form-control" v-model="username" placeholder="username...">
                 <input type="password" class="form-control" v-model="password" placeholder="password...">
+                 <h6 v-if="failure" id="failure">*Account does not exist</h6>
                 <button class="btn btn-primary" @click="login">Login</button>
             </div>
         </template>
 
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.0-beta.6/vue.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.js"></script>
         <script type="text/javascript" src="app.js"></script>
     </body>   
 </html>

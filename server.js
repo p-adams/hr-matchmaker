@@ -39,6 +39,8 @@ var registerNewUser= (firstname, lastname, username, password, selected)=>{
 io.on('connection', (socket) => {
     console.log('Someone connected to server');
 
+    socket.emit('start', users)
+
     socket.on('login', (login)=>{
         if(userExists(users, login.u, login.p)){
             io.emit('login-success', login)
