@@ -122,7 +122,10 @@ new Vue({
         create: true,
         mainContentVisible: false,
         user: false,
-        clicked: false
+        username: '',
+        password: ''
+       
+       
     },
     methods: {
         clearForm(){
@@ -131,15 +134,15 @@ new Vue({
             this.createUsr = ''
             this.createPass = ''
             this.selected = ''
+            this.username=''
+            this.password=''
         },
         register(){
             var usr = {u: this.createUsr, p: this.createPass}
             socket.emit('check-user', usr )
             socket.on('check-user', (user)=>{
                this.registrationFailure = false
-               this.clicked = false
                this.mainContentVisible=true
-               //this.reg = true
                console.log("Not user: ", user.u, user.p)
            })
             socket.emit('register', {
@@ -150,21 +153,30 @@ new Vue({
                 s: this.selected
             })
             socket.on('failure', ()=>{
-                this.registrationFailure = true
-                this.clicked = false;
+                this.registrationFailure = true    
                 console.log('user exists')
             })  
             this.clearForm()    
         },
+        login(){
+            
+            socket.emit('login', {u: this.username, p: this.password})
+
+            var self = this
+            socket.on('login-failure', (data)=>{
+                console.log("account doesnt exist")
+            })
+            this.clearForm()
+            
+        },
         logUser(){
             this.user = true
-            this.clicked = true
             this.mainContentVisible = true
         }
     },
     computed: {
         hideMain(){
-            return this.mainContentVisible===true&&this.user===false
+            return this.mainContentVisible && ! this.user
         }
     },
     created(){
@@ -184,7 +196,6 @@ new Vue({
 
 /* 
 
-Main content is hidden by default, if user registers new user,
-registration form is hidden and main content is shown.
+Login: login without registering -> 
 
 */
