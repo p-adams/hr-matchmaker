@@ -121,9 +121,11 @@ new Vue({
         registrationFailure: false,
         create: true,
         mainContentVisible: false,
-        user: false,
+       // user: false,
         username: '',
-        password: ''
+        password: '',
+        loginFailure: false,
+        log: false
        
        
     },
@@ -159,24 +161,31 @@ new Vue({
             this.clearForm()    
         },
         login(){
-            
+           if(!this.loginFailure){
+               this.log = false
+           }
             socket.emit('login', {u: this.username, p: this.password})
 
             var self = this
             socket.on('login-failure', (data)=>{
+                this.loginFailure = true
                 console.log("account doesnt exist")
             })
             this.clearForm()
             
         },
         logUser(){
-            this.user = true
+            this.log = true
+            //this.user = true
             this.mainContentVisible = true
         }
     },
     computed: {
         hideMain(){
-            return this.mainContentVisible && ! this.user
+            return this.mainContentVisible && ! this.log
+        },
+        hideLogin(){
+            return !this.log
         }
     },
     created(){
@@ -186,11 +195,11 @@ new Vue({
             console.log('registered: ', data.u, data.p)
         })
        
-        /*var self = this
+        var self = this
         socket.on('login-success', (data)=>{
             //this.sharedState.state.logged = true
             self.username = data.u
-        })*/
+        })
     }
 })
 
