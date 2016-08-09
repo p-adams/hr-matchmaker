@@ -17,23 +17,17 @@ Vue.component('register', {
     template: "#register",
     created(){
        
-        var self = this
-        socket.on('failure', (data)=>{
-            self.registered = true
-            var userDetails = _.mapValues(data , function(d) { return d; });
-        })
+        
     },
     data(){
         return{
-            users:[],
+            //users:[],
             firstname: '',
             lastname: '',
             createUsr: '',
             createPass: '',
             selected: 'Select',
-            confirmUser: false,
-            //hide: this.st.state.hideMain,
-            //registered: this.st.state.registered,
+            registrationFailure: false,
             create: true,
             reg: false,
             user: false
@@ -48,8 +42,14 @@ Vue.component('register', {
             this.selected = ''
         },
         register(){
-            this.create = false
-            this.reg = true
+
+            var self = this
+            socket.on('failure', (data)=>{
+                self.registrationFailure = true
+            var userDetails = _.mapValues(data , function(d) { return d; });
+             })
+           
+            if(this.registrationFailure===false){
             socket.emit('register', {
                 f: this.firstname,
                 l: this.lastname,
@@ -57,10 +57,11 @@ Vue.component('register', {
                 p: this.createPass,
                 s: this.selected
             })
-            this.clearForm()
-            if(!this.registered){
-                this.hideMain = true
+                this.create = false
+                this.reg = true
             }
+            this.clearForm()
+            
             
         },
         logUser(){

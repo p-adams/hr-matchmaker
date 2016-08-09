@@ -31,7 +31,7 @@
                         <option>Employer</option>
                     </select>
                 </div>
-                <h6 id="failure">*Username taken or account exists</h6>
+                <h6 v-if="registrationFailure" id="failure">*Username taken or account exists</h6>
                 <button class="btn btn-primary" @click="register">Create Account</button>
             </div>
                 <login v-if="user">
