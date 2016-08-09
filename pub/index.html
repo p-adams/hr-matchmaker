@@ -8,44 +8,20 @@
     <body>
         <div id="app" class="container">
  
-            <div v-if="!hide" class="jumbotron">
-                <h3>Welcome to HR Matchmaker</h3>
-                <h5>Like Match.com but for job seekers and employers</h5>
-              <label>Selected: {{role}}</label>
-            <div class="radio">
-                    <label><input type="radio"
-                                  v-model="role"
-                                  value="login"
-                                  name="role"
-                                  @change="select"
-                            >Login
-                    </label>
-                </div>
-                <div class="radio">
-                    <label><input type="radio"
-                                  v-model="role"
-                                  value="create"
-                                  name="role"
-                                  @change="select"
-                            >Create Account
-                    </label>
-                </div>
-            </div>
+            
+               
+                
 
-            <div v-if="showReg">
-            <register 
-                      :frst="firstname"
-                      :lst="lastname"
-                      :usr="createUsr"
-                      :pass="createPass"
-                      :slct="selected"
+            <div >
+            <register v-if="!user"
+                      
                       
                       :st="sharedState"
             >
             </register>
           
             </div>
-            <login v-if="showLog"
+            <login v-if="user"
                    :usr="username"
                    :pass="password"
                    
@@ -59,6 +35,8 @@
 
         <template id="register">
             <div class="jumbotron">
+                 <h3>Welcome to HR Matchmaker</h3>
+                <h5>Like Match.com but for job seekers and employers</h5>
                 
                 <h5>Fill out form below to create an account</h5>
                 <h6>Already a user? <a href="#" @click="logUser">login</a></h6>
@@ -89,7 +67,6 @@
                 <input type="text" class="form-control" v-model="username" placeholder="username...">
                 <input type="password" class="form-control" v-model="password" placeholder="password...">
                  <h6 v-if="logged" id="failure">*Account does not exist</h6>
-                 <h6>Do not have an account? <a href="#">Create account</a></h6>
                 <button class="btn btn-primary" @click="login">Login</button>
             </div>
         </template>

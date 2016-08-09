@@ -4,7 +4,8 @@ var store = {
     state: {
         registered: false,
         logged: false,
-        hideMain: true
+        isUser: false,
+       
     }
 }
 
@@ -25,14 +26,15 @@ Vue.component('register', {
     data(){
         return{
             users:[],
-            firstname: this.frst,
-            lastname: this.lst,
-            createUsr: this.usr,
-            createPass: this.pass,
-            selected: this.slct,
+            firstname: '',
+            lastname: '',
+            createUsr: '',
+            createPass: '',
+            selected: 'Select',
             confirmUser: false,
             hide: this.st.state.hideMain,
             registered: this.st.state.registered,
+            user: this.st.state.isUser
         }
     },
     methods: {
@@ -59,7 +61,9 @@ Vue.component('register', {
             
         },
         logUser(){
-            this.confirmUser = true
+            
+            this.registered = true
+            alert(this.registered)
         }
     }
 })
@@ -98,38 +102,20 @@ Vue.component('login', {
 new Vue({
     el: "#app",
     data: {
-        firstname: '',
-        lastname: '',
-        createUsr: '',
-        createPass: '',
-        selected: 'Select',
+        
         username: '',
         password: '',
-        log: false,
+       
         sharedState: store,
-        register: false,
-        role: '',      
+       
+           
     },
     methods: {
-        select(e){
-            var val = e.currentTarget.value
-            if(val === "login"){
-                this.log=true        
-            }
-            else if(val === 'create'){
-                this.register=true
-            }
-        }
+       
     },
     computed: {
-        hide(){
-           return this.register || this.log
-        },
-        showReg(){ 
-            return this.register && !this.sharedState.state.registered
-        },
-        showLog(){
-            return this.log && !this.sharedState.state.logged
+        user(){
+            return this.sharedState.state.registered
         }
     },
     created(){
@@ -147,4 +133,8 @@ new Vue({
     }
 })
 
+/* 
+User gets on site, there is a create account form, 
+the user can create a new account or login to existing account
 
+*/
