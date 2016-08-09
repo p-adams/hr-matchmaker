@@ -2,10 +2,7 @@ var socket = io();
 
 var store = {
     state: {
-        registered: false,
-        logged: false,
-        isUser: false,
-       
+        username: ''
     }
 }
 
@@ -13,15 +10,13 @@ Vue.component('meow',{
     template: '<h3>Meow</h3>'
 })
 Vue.component('register', {
-    props: ['frst', 'lst', 'usr', 'pass', 'slct', 'st'],
+    props: ['usr'],
     template: "#register",
     created(){
-       
-        
+                
     },
     data(){
         return{
-            //users:[],
             firstname: '',
             lastname: '',
             createUsr: '',
@@ -30,7 +25,8 @@ Vue.component('register', {
             registrationFailure: false,
             create: true,
             reg: false,
-            user: false
+            user: false,
+            username: this.usr
         }
     },
     methods: {
@@ -42,14 +38,17 @@ Vue.component('register', {
             this.selected = ''
         },
         register(){
+            alert(this.username)
 
-            var self = this
-            socket.on('failure', (data)=>{
-                self.registrationFailure = true
-            var userDetails = _.mapValues(data , function(d) { return d; });
-             })
+            var usr = {u: this.createUsr, p: this.createPass}
            
-            if(this.registrationFailure===false){
+            socket.emit('check-user', usr )
+            socket.on('check-user', (user)=>{
+               this.registrationFailure = false
+               this.create = false
+               this.reg = true
+               console.log("Not user: ", user.u, user.p)
+           })
             socket.emit('register', {
                 f: this.firstname,
                 l: this.lastname,
@@ -57,9 +56,10 @@ Vue.component('register', {
                 p: this.createPass,
                 s: this.selected
             })
-                this.create = false
-                this.reg = true
-            }
+            socket.on('failure', ()=>{
+                this.registrationFailure = true
+                console.log('user exists')
+            })  
             this.clearForm()
             
             
@@ -67,13 +67,6 @@ Vue.component('register', {
         logUser(){
             this.user = true
             this.create = false
-        }
-    },
-    computed: {
-        showMain(){
-            if(this.created===false && this.reg===true){
-                console.log('meow')
-            }
         }
     }
 })
@@ -93,7 +86,7 @@ Vue.component('login', {
             username: this.usr,
             password: this.pass,
             log: false,
-            //logged: this.st.state.logged
+            
         }
     },
     methods: {
@@ -110,7 +103,12 @@ Vue.component('login', {
 })
 
 Vue.component('main-content', {
-    template: `<p>Meow</p>`
+    props:['usr'],
+    created(){
+        console.log(this.usr)
+    
+    },
+    template: `<p>Hello{{usr}}</p>`
 })
 
 new Vue({
@@ -118,32 +116,26 @@ new Vue({
     data: {
         
         username: '',
-        password: '',
-       
-        sharedState: store,
-       
-           
-    },
-    methods: {
-       
-    },
-    computed: {
-        user(){
-            return this.sharedState.state.registered
-        }
+        password: ''
+        //sharedState: store,      
     },
     created(){
-       
         var self = this
         socket.on('register', (data)=>{
-            this.sharedState.state.registered = true
+            self.username = data.u
+            console.log('registered: ', data.u, data.p)
+        })
+       
+        /*var self = this
+        socket.on('register', (data)=>{
+            //this.sharedState.state.registered = true
             self.username = data.u
             console.log(data.u, data.p)
         })
         socket.on('login-success', (data)=>{
-            this.sharedState.state.logged = true
+            //this.sharedState.state.logged = true
             self.username = data.u
-        })
+        })*/
     }
 })
 

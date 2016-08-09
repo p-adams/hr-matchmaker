@@ -39,7 +39,22 @@ var registerNewUser= (firstname, lastname, username, password, selected)=>{
 io.on('connection', (socket) => {
     console.log('Someone connected to server');
 
-    socket.emit('start', users)
+    //socket.emit('start', users)
+
+    socket.on('check-user', (data)=>{
+         console.log('from check-user', data.u, data.p)
+         console.log(userExists(users, data.u, data.p))
+       if(!userExists(users, data.u, data.p)){
+            io.emit('check-user', data)
+           console.log(users.length)
+            //registerNewUser(data.f, data.l, data.u, data.p, data.s)
+        }
+        
+    })
+    //starts out with empty array of users, 
+
+        
+
 
     socket.on('login', (login)=>{
         if(userExists(users, login.u, login.p)){
