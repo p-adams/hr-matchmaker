@@ -38,7 +38,7 @@
                 <button class="btn btn-primary" @click="login">Login</button>
             </div>
 
-            <main-content :usr="createUsr" :username="username" v-if="hideMain"></main-content>
+            <main-content  :usr="createUsr" :u="username" v-if="hideMain"></main-content>
    
         </div>
 
@@ -51,12 +51,13 @@
                 <a class="navbar-brand" href="#">HR Matchmaker</a>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span>Welcome: {{usr}} {{username}}</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span>Welcome: {{showUsername}}</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span>Create Profile</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                 </ul>
             </div>
         </nav>
+        <pre>{{$data}}</pre>
             </div>
             
         </template>

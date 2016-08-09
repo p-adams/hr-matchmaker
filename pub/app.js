@@ -1,11 +1,44 @@
 var socket = io();
 
 Vue.component('main-content', {
-    props:['usr', 'username'],
+    props:['usr', 'u', 'd'],
     created(){
-        console.log(this.usr)
-    
+        var self = this
+        console.log(this.u)
+        socket.on('register', (data)=>{
+            self.firstname = data.f
+            self.lastname = data.l
+            self.username = data.u
+            self.password = data.p
+            self.sel = data.s
+            console.log('show user details: ', data.u, data.p)
+        })
+        socket.on('login-success', (data)=>{
+            self.username = data.u
+            self.password = data.p
+            console.log('login', data.u)
+        })
     },
+    data(){
+        return{
+            firstname: '',
+            lastname: '',
+            username: '',
+            password: '',
+            sel: '',
+            uName: this.u
+        }
+    },
+    computed:{
+        showUsername(){
+                
+                if(this.uName==this.uName&&this.uName!=''){        
+                    return this.uName
+                }else{
+                    return this.username
+                }
+            }
+        },
     template: "#main-content"
 })
 
@@ -16,7 +49,7 @@ new Vue({
         lastname: '',
         createUsr: '',
         createPass: '',
-        selected: 'Select',
+        selected: '',
         registrationFailure: false,
         create: true,
         mainContentVisible: false,
@@ -88,13 +121,14 @@ new Vue({
         var self = this
         socket.on('register', (data)=>{
             self.createUsr = data.u
-            console.log('registered: ', data.u, data.p)
+            console.log('registered: ', data.s, data.p)
         })
        
         var self = this
         socket.on('login-success', (data)=>{
             this.log = false
             self.username = data.u
+            console.log('login sucess')
         })
     }
 })
