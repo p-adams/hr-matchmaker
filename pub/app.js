@@ -2,7 +2,8 @@ var socket = io();
 
 var store = {
     state: {
-        username: ''
+        clicked: true,
+        show: false
     }
 }
 
@@ -10,7 +11,7 @@ Vue.component('meow',{
     template: '<h3>Meow</h3>'
 })
 Vue.component('register', {
-    props: ['usr'],
+    props: ['st'],
     template: "#register",
     created(){
                 
@@ -24,9 +25,9 @@ Vue.component('register', {
             selected: 'Select',
             registrationFailure: false,
             create: true,
-            reg: false,
+            //reg: false,
             user: false,
-            username: this.usr
+            clicked: this.st
         }
     },
     methods: {
@@ -38,15 +39,16 @@ Vue.component('register', {
             this.selected = ''
         },
         register(){
-            alert(this.username)
-
+           
+            this.clicked = false
+             alert(this.clicked)
             var usr = {u: this.createUsr, p: this.createPass}
            
             socket.emit('check-user', usr )
             socket.on('check-user', (user)=>{
                this.registrationFailure = false
-               this.create = false
-               this.reg = true
+               this.clicked = false
+               //this.reg = true
                console.log("Not user: ", user.u, user.p)
            })
             socket.emit('register', {
@@ -116,8 +118,8 @@ new Vue({
     data: {
         
         username: '',
-        password: ''
-        //sharedState: store,      
+        password: '',
+        clicked: store.state.clicked,      
     },
     created(){
         var self = this

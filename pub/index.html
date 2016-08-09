@@ -8,14 +8,14 @@
     <body>
         <div id="app" class="container">
            
-            <register :usr="username"></register>
-            <main-content :usr="username"></main-content>
+            <register v-if="clicked" :usr="username" :st="clicked"></register>
+           
         </div>
 
         <template id="register">
             <div>
                
-            <div v-if="create" class="jumbotron">
+            <div v-if="clicked" class="jumbotron">
                  <h3>Welcome to HR Matchmaker</h3>
                 <h5>Like Match.com but for job seekers and employers</h5>
                 <h5>Fill out form below to create an account</h5>
@@ -38,7 +38,7 @@
                 <login v-if="user">
 
                 </login>
-                <main-content v-if="reg"></main-content>
+                <main-content :usr="username" v-if="!clicked"></main-content>
             </div>
             
                 
