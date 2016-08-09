@@ -6,7 +6,7 @@ Vue.component('main-content', {
         console.log(this.usr)
     
     },
-    template: `<p>Hello {{usr}} {{username}}</p>`
+    template: "#main-content"
 })
 
 new Vue({
