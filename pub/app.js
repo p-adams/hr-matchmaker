@@ -3,9 +3,14 @@ var socket = io();
 var store = {
     state: {
         registered: false,
-        logged: false
+        logged: false,
+        hideMain: true
     }
 }
+
+Vue.component('meow',{
+    template: '<h3>Meow</h3>'
+})
 Vue.component('register', {
     props: ['frst', 'lst', 'usr', 'pass', 'slct', 'st'],
     template: "#register",
@@ -26,6 +31,7 @@ Vue.component('register', {
             createPass: this.pass,
             selected: this.slct,
             confirmUser: false,
+            hide: this.st.state.hideMain,
             registered: this.st.state.registered,
         }
     },
@@ -47,10 +53,8 @@ Vue.component('register', {
                 s: this.selected
             })
             this.clearForm()
-            console.log(this.registered)
-            if(this.registered){
-                this.registered = true
-                console.log('meow')
+            if(!this.registered){
+                this.hideMain = true
             }
             
         },
@@ -126,9 +130,6 @@ new Vue({
         },
         showLog(){
             return this.log && !this.sharedState.state.logged
-        },
-        main(){
-            return !this.showReg && !this.showLog
         }
     },
     created(){

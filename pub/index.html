@@ -52,10 +52,7 @@
                    :st="sharedState"
             >   
             </login>
-
-            <div v-if="main" class="jumbotron">
-                <h3>Welcome {{username}}</h3>
-            </div>
+            
             
         </div>
 
@@ -79,7 +76,7 @@
                 </div>
                 <h6 v-if="registered" id="failure">*Username taken or account exists</h6>
                 <button class="btn btn-primary" @click="register">Create Account</button>
-                
+             
             </div>
             
                 
