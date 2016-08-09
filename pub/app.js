@@ -1,113 +1,12 @@
 var socket = io();
 
-var store = {
-    state: {
-        clicked: true,
-        show: false
-    }
-}
-/*
-Vue.component('register', {
-    props: ['st'],
-    template: "#register",
-    created(){
-                
-    },
-    data(){
-        return{
-            firstname: '',
-            lastname: '',
-            createUsr: '',
-            createPass: '',
-            selected: 'Select',
-            registrationFailure: false,
-            create: true,
-            //reg: false,
-            user: false,
-            clicked: this.st
-        }
-    },
-    methods: {
-        clearForm(){
-            this.firstname = ''
-            this.lastname = ''
-            this.createUsr = ''
-            this.createPass = ''
-            this.selected = ''
-        },
-        register(){
-           
-            this.clicked = false
-             alert(this.clicked)
-            var usr = {u: this.createUsr, p: this.createPass}
-           
-            socket.emit('check-user', usr )
-            socket.on('check-user', (user)=>{
-               this.registrationFailure = false
-               this.clicked = false
-               //this.reg = true
-               console.log("Not user: ", user.u, user.p)
-           })
-            socket.emit('register', {
-                f: this.firstname,
-                l: this.lastname,
-                u: this.createUsr,
-                p: this.createPass,
-                s: this.selected
-            })
-            socket.on('failure', ()=>{
-                this.registrationFailure = true
-                console.log('user exists')
-            })  
-            this.clearForm()
-            
-            
-        },
-        logUser(){
-            this.user = true
-            this.create = false
-        }
-    }
-})*/
-
-Vue.component('login', {
-    props: ['usr', 'pass',  'st'],
-    template: '#login',
-    created(){
-        var self = this
-        socket.on('login-failure', (data)=>{
-            self.logged = true
-        })
-        
-    },
-    data(){
-        return{
-            username: this.usr,
-            password: this.pass,
-            log: false,
-            
-        }
-    },
-    methods: {
-        login(){
-            this.log = true
-            
-            socket.emit('login', {u: this.username, p: this.password})
-            this.username=''
-            this.password=''
-            console.log(this.logged)
-            
-        },
-    }
-})
-
 Vue.component('main-content', {
-    props:['usr'],
+    props:['usr', 'username'],
     created(){
         console.log(this.usr)
     
     },
-    template: `<p>Hello {{usr}}</p>`
+    template: `<p>Hello {{usr}} {{username}}</p>`
 })
 
 new Vue({
@@ -121,7 +20,6 @@ new Vue({
         registrationFailure: false,
         create: true,
         mainContentVisible: false,
-       // user: false,
         username: '',
         password: '',
         loginFailure: false,
@@ -161,11 +59,10 @@ new Vue({
             this.clearForm()    
         },
         login(){
-           if(!this.loginFailure){
-               this.log = false
-           }
+            this.mainContentVisible = true
+           
             socket.emit('login', {u: this.username, p: this.password})
-
+           
             var self = this
             socket.on('login-failure', (data)=>{
                 this.loginFailure = true
@@ -176,13 +73,12 @@ new Vue({
         },
         logUser(){
             this.log = true
-            //this.user = true
             this.mainContentVisible = true
         }
     },
     computed: {
         hideMain(){
-            return this.mainContentVisible && ! this.log
+            return this.mainContentVisible && !this.loginFailure && ! this.log
         },
         hideLogin(){
             return !this.log
@@ -197,7 +93,7 @@ new Vue({
        
         var self = this
         socket.on('login-success', (data)=>{
-            //this.sharedState.state.logged = true
+            this.log = false
             self.username = data.u
         })
     }
@@ -205,6 +101,6 @@ new Vue({
 
 /* 
 
-Login: login without registering -> 
+click on login => hide login div and show main content 
 
 */
