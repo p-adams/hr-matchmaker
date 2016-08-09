@@ -35,7 +35,8 @@ Vue.component('register', {
             //hide: this.st.state.hideMain,
             //registered: this.st.state.registered,
             create: true,
-            reg: false
+            reg: false,
+            user: false
         }
     },
     methods: {
@@ -63,12 +64,15 @@ Vue.component('register', {
             
         },
         logUser(){
+            this.user = true
             this.create = false
         }
     },
     computed: {
         showMain(){
-            if(this.reg===true && this.create===false)return true
+            if(this.created===false && this.reg===true){
+                console.log('meow')
+            }
         }
     }
 })

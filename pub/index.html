@@ -34,10 +34,10 @@
                 <h6 id="failure">*Username taken or account exists</h6>
                 <button class="btn btn-primary" @click="register">Create Account</button>
             </div>
-                <login v-if="!create">
+                <login v-if="user">
 
                 </login>
-                <main-content v-if="showMain"></main-content>
+                <main-content v-if="reg"></main-content>
             </div>
             
                 
