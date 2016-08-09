@@ -7,34 +7,13 @@
     </head>
     <body>
         <div id="app" class="container">
- 
-            
-               
-                
-
-            <div >
-            <register v-if="!user"
-                      
-                      
-                      :st="sharedState"
-            >
-            </register>
-          
-            </div>
-            <login v-if="user"
-                   :usr="username"
-                   :pass="password"
-                   
-                   :st="sharedState"
-            >   
-            </login>
-            
-            
+            <register></register>
         </div>
 
-
         <template id="register">
-            <div class="jumbotron">
+            <div>
+               
+            <div v-if="create" class="jumbotron">
                  <h3>Welcome to HR Matchmaker</h3>
                 <h5>Like Match.com but for job seekers and employers</h5>
                 
@@ -52,9 +31,13 @@
                         <option>Employer</option>
                     </select>
                 </div>
-                <h6 v-if="registered" id="failure">*Username taken or account exists</h6>
+                <h6 id="failure">*Username taken or account exists</h6>
                 <button class="btn btn-primary" @click="register">Create Account</button>
-             
+            </div>
+                <login v-if="!create">
+
+                </login>
+                <main-content v-if="showMain"></main-content>
             </div>
             
                 
@@ -62,13 +45,16 @@
         </template>
 
         <template id="login">
-            <div class="jumbotron">
+            <div>
+            <div v-if="!log" class="jumbotron">
                 <h5>Enter username and password</h5>
                 <input type="text" class="form-control" v-model="username" placeholder="username...">
                 <input type="password" class="form-control" v-model="password" placeholder="password...">
-                 <h6 v-if="logged" id="failure">*Account does not exist</h6>
+                 <h6  id="failure">*Account does not exist</h6>
                 <button class="btn btn-primary" @click="login">Login</button>
             </div>
+            <main-content v-if="log"></main-content>
+            <div>
         </template>
 
 

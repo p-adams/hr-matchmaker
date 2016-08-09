@@ -32,9 +32,10 @@ Vue.component('register', {
             createPass: '',
             selected: 'Select',
             confirmUser: false,
-            hide: this.st.state.hideMain,
-            registered: this.st.state.registered,
-            user: this.st.state.isUser
+            //hide: this.st.state.hideMain,
+            //registered: this.st.state.registered,
+            create: true,
+            reg: false
         }
     },
     methods: {
@@ -46,7 +47,8 @@ Vue.component('register', {
             this.selected = ''
         },
         register(){
-           
+            this.create = false
+            this.reg = true
             socket.emit('register', {
                 f: this.firstname,
                 l: this.lastname,
@@ -61,9 +63,12 @@ Vue.component('register', {
             
         },
         logUser(){
-            
-            this.registered = true
-            alert(this.registered)
+            this.create = false
+        }
+    },
+    computed: {
+        showMain(){
+            if(this.reg===true && this.create===false)return true
         }
     }
 })
@@ -82,14 +87,14 @@ Vue.component('login', {
         return{
             username: this.usr,
             password: this.pass,
-            logged: this.st.state.logged
+            log: false,
+            //logged: this.st.state.logged
         }
     },
     methods: {
         login(){
-            if(this.logged){
-                console.log(this.logged)
-            }
+            this.log = true
+            
             socket.emit('login', {u: this.username, p: this.password})
             this.username=''
             this.password=''
@@ -97,6 +102,10 @@ Vue.component('login', {
             
         },
     }
+})
+
+Vue.component('main-content', {
+    template: `<p>Meow</p>`
 })
 
 new Vue({
