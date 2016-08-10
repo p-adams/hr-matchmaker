@@ -135,30 +135,30 @@
             <div>
                 <form role="form">
                 <div class="form-group">
-                    <label for="field">Field:</label>
-                    <input type="text" class="form-control" id="field">
+                    <label for="field">In what field are you looking for a job?</label>
+                    <input type="text" v-model="field" class="form-control" id="field">
                 </div>
                 <div class="form-group">
-                    <label for="skills">Technologies:</label>
+                    <label for="skills">What Technologies do you have experience with?</label>
                     <input type="text" class="form-control" id="skills">
                 </div>
                     <div class="form-group">
-                    <label for="exp">Relevant Experience:</label>
+                    <label for="exp">How many years of relevant experience do you have?</label>
                     <input type="text" class="form-control" id="exp">
                 </div>
                 <div class="form-group">
-                    <label for="ed">Education:</label>
+                    <label for="ed">Education</label>
                     <input type="text" class="form-control" id="ed">
                 </div>
                     <div class="form-group">
-                    <label for="loc">Location:</label>
+                    <label for="loc">You are searching for jobs in which location: </label>
                     <input type="text" class="form-control" id="loc">
                 </div>
                     <div class="form-group">
-                    <label for="email">Email:</label>
+                    <label for="email">What is your preferred contact email?</label>
                     <input type="email" class="form-control" id="email">
                 </div>
-                <button  class="btn btn-default">Create Profile</button>
+                <button @click="addSeekerProfile" class="btn btn-default">Create Profile</button>
                 </form>  
             </div>
         </template>
@@ -167,19 +167,19 @@
             <div>
                 <form role="form">
                     <div class="form-group">
-                        <label for="field">Field</label>
+                        <label for="field">Job Title: </label>
                         <input type="text" class="form-control" id="field">
                     </div>
                     <div class="form-group">
-                        <label for="skills">Required technologies:</label>
+                        <label for="skills">Applicant must know the following technologies: </label>
                         <input type="text" class="form-control" id="skills">
                     </div>
                         <div class="form-group">
-                        <label for="exp">Required Experience:</label>
+                        <label for="exp">Applicant should have how many years of relevant experience:</label>
                         <input type="text" class="form-control" id="exp">
                     </div>
                     <div class="form-group">
-                        <label for="ed">Required Education:</label>
+                        <label for="ed">Education required for this position:</label>
                         <input type="text" class="form-control" id="ed">
                     </div>
                         <div class="form-group">

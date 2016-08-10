@@ -50,8 +50,6 @@ var registerNewUser= (firstname, lastname, username, password, email,selected)=>
 io.on('connection', (socket) => {
     console.log('Someone connected to server');
 
-    
-
     socket.on('check-user', (data)=>{
          console.log('from check-user', data.u, data.p)
          console.log(userExists(users, data.u, data.p))
@@ -61,7 +59,6 @@ io.on('connection', (socket) => {
         }
         
     })
-
 
     socket.on('login', (login)=>{
         if(userExists(users, login.u, login.p)){
@@ -84,7 +81,6 @@ io.on('connection', (socket) => {
         }        
     })
 
-
     socket.on('find-user', (data)=>{
       
     var result = users.filter(function( obj ) {
@@ -97,6 +93,12 @@ io.on('connection', (socket) => {
             io.emit('find-user', data)
         }
     })
+
+    socket.on('seeker-profile', (data)=>{
+        io.emit('seeker-profile', data)
+    })
+
+
 
  
     socket.on('disconnect', (socket) => {

@@ -8,7 +8,19 @@ Vue.component('employer', {
 })
 
 Vue.component('job-seeker', {
-    template: '#job-seeker'
+    template: '#job-seeker',
+    data(){
+        return{
+            field: ''
+        }
+    },
+    methods: {
+        addSeekerProfile(){
+            socket.emit('seeker-profile', {
+                field: this.field
+            })
+        }
+    }
 })
 
 Vue.component('user-info', {
@@ -34,17 +46,9 @@ Vue.component('main-content', {
                         e:data.e,
                         s:data.s
                     })
-                     var accountType = this.loginDetails.map((u)=>{
-                    return u.s
-                })
-                if(accountType[0]==="Job Seeker"){
-                    console.log('User is a job seeker')
-                    self.isJobSeeker = true
-                }
-                else{
-                    console.log('User is an employer')
-                    self.isEmployer = true
-                }
+            var accountType = this.loginDetails.map((u)=>{return u.s})
+            accountType[0]==="Job Seeker" ? self.isJobSeeker = true : self.isEmployer = true
+               
             console.log('show user details: ', data.u, data.p)
         })
           socket.emit('find-user', {
@@ -69,17 +73,8 @@ Vue.component('main-content', {
                         s:user.s
                     })
                 })
-                var accountType = this.loginDetails.map((u)=>{
-                    return u.s
-                })
-                if(accountType[0]==="Job Seeker"){
-                    console.log('User is a job seeker')
-                    this.isJobSeeker = true
-                }
-                else{
-                    console.log('User is an employer')
-                    this.isEmployer = true
-                }
+            var accountType = this.loginDetails.map((u)=>{return u.s})
+            accountType[0]==="Job Seeker" ? self.isJobSeeker = true : self.isEmployer = true
             })
     },
     data(){
@@ -110,7 +105,12 @@ Vue.component('main-content', {
                 return this.username
             }
         }
-        },
+    },
+    mounted(){
+        socket.on('seeker-profile', (data)=>{
+            console.log('job seeker\'s field, ', data.field)
+        })
+    },
     template: "#main-content"
 })
 
