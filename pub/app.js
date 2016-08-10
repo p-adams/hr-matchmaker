@@ -9,6 +9,7 @@ Vue.component('main-content', {
             self.lastname = data.l
             self.username = data.u
             self.password = data.p
+            self.email = data.e
             self.sel = data.s
             console.log('show user details: ', data.u, data.p)
         })
@@ -17,6 +18,7 @@ Vue.component('main-content', {
                 l: this.lastname,
                 u: this.username,
                 p: this.password,
+                e: this.email,
                 s: this.sel,
                 log: this.uName
             })
@@ -26,11 +28,12 @@ Vue.component('main-content', {
                 //array of objects contain user details but 
                 //only if they entered main page by registering
                 data.r.map(function(user){
-                    self.loginDetails.push({
+                    self.userDetails.push({
                         f:user.f,
                         l:user.l, 
                         u:user.u, 
                         p:user.p,
+                        e:user.e,
                         s:user.s
                     })
                 })
@@ -47,6 +50,7 @@ Vue.component('main-content', {
             lastname: '',
             username: '',
             password: '',
+            email: '',
             sel: '',
             uName: this.u
         }
@@ -54,11 +58,12 @@ Vue.component('main-content', {
     methods: {
         findUser(){
 
-            /*socket.emit('find-user', {
+            socket.emit('find-user', {
                 f: this.firstname,
                 l: this.lastname,
                 u: this.username,
                 p: this.password,
+                e: this.email,
                 s: this.sel,
                 log: this.uName
             })
@@ -73,11 +78,12 @@ Vue.component('main-content', {
                         l:user.l, 
                         u:user.u, 
                         p:user.p,
+                        e:user.e,
                         s:user.s
                     })
                 })
                 //this.userDetails.push(data.f, data.l, data.u, data.p, data.s)
-            })*/
+            })
         }
     },
     computed:{
@@ -99,6 +105,7 @@ new Vue({
         lastname: '',
         createUsr: '',
         createPass: '',
+        email: '',
         selected: '',
         registrationFailure: false,
         create: true,
@@ -112,10 +119,11 @@ new Vue({
     },
     methods: {
         clearForm(){
-            this.firstname = ''
-            this.lastname = ''
+            //this.firstname = ''
+            //this.lastname = ''
             this.createUsr = ''
             this.createPass = ''
+            this.email=''
             this.selected = ''
             this.username=''
             this.password=''
@@ -133,6 +141,7 @@ new Vue({
                 l: this.lastname,
                 u: this.createUsr,
                 p: this.createPass,
+                e: this.email,
                 s: this.selected
             })
             socket.on('failure', ()=>{

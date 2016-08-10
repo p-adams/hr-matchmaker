@@ -20,6 +20,7 @@
                 <input type="text" class="form-control" v-model="lastname" placeholder="lastname...">
                 <input type="text" class="form-control" v-model="createUsr" placeholder="create username...">
                 <input type="password" class="form-control" v-model="createPass" placeholder="create password...">
+                <input type="email" class="form-control" v-model="email" placeholder="enter email...">
                 <div class="form-group">
                     <label for="sel1">Register as: {{selected}}</label>
                     <select class="form-control" id="sel1" v-model="selected">
@@ -77,6 +78,8 @@
                             <th>Lastname</th>
                             <th>Username</th>
                             <th>Password</th>
+                            <th>Email</th>
+                            <th>Account Type</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -85,6 +88,8 @@
                             <td>{{user.l}}</td>
                             <td>{{user.u}}</td>
                             <td>{{user.p}}</td>
+                            <td>{{user.e}}</td>
+                            <td>{{user.s}}</td>
                         </tr>
                         </tbody>
                     </table>

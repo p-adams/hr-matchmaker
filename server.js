@@ -35,8 +35,8 @@ var userExists=(arr, username, password)=>{
     return isUser&&isPass   
 }
 
-var registerNewUser= (firstname, lastname, username, password, selected)=>{
-    var newUser = {f: firstname, l: lastname, u: username, p: password, s: selected}
+var registerNewUser= (firstname, lastname, username, password, email,selected)=>{
+    var newUser = {f: firstname, l: lastname, u: username, p: password, e: email, s: selected}
     users.push(newUser)
     for(p in newUser){
         console.log( newUser[p], users.length)
@@ -75,7 +75,7 @@ io.on('connection', (socket) => {
 
     socket.on('register', (data)=>{
         if(!userExists(users, data.u, data.p)&&!usernameTaken(users,data.u)){
-            registerNewUser(data.f, data.l, data.u, data.p, data.s)
+            registerNewUser(data.f, data.l, data.u, data.p, data.e, data.s)
             io.emit('register', data)
         }
         else{
