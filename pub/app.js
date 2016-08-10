@@ -107,7 +107,7 @@ new Vue({
         createUsr: '',
         createPass: '',
         email: '',
-        selected: '',
+        selected: 'Select',
         registrationFailure: false,
         create: true,
         mainContentVisible: false,
