@@ -20,8 +20,8 @@ var login = (name, password)=> {
 
 
 var findUser=(arr, username1, username2)=>{
-    var regUser = arr.filter(function(e) { console.log('meow', e);return e.u == username1}).length > 0
-    var logUser = arr.filter(function(e) { console.log('woof', e);return e.u== username2}).length > 0
+    var regUser = arr.filter(function(e) { return e.u == username1}).length > 0
+    var logUser = arr.filter(function(e) { return e.u== username2}).length > 0
     return regUser || logUser
 }
 
@@ -84,14 +84,13 @@ io.on('connection', (socket) => {
         }        
     })
 
-//user gets to main page by logging in
-//user needs a way to get his and only his records
+
     socket.on('find-user', (data)=>{
       
     var result = users.filter(function( obj ) {
-        return obj.u == 'q';
+        return obj.u == data.u || obj.u == data.log;
     });
-    console.log('the result', result)
+    
         if(findUser(users, data.u, data.log)){
             console.log('sending user info to main-content...')
             data.r = result
