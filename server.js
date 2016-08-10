@@ -14,8 +14,10 @@ var login = (name, password)=> {
     employers.push(employer)
 }
 
-var findUser=(user, username, password)=>{
-    return user.u === username && user.p === password
+var findUser=(arr, username1, username2)=>{
+    var regUser = arr.filter(function(e) { return e.u == username1}).length > 0
+    var logUser = arr.filter(function(e) { return e.p == username2}).length > 0
+    return regUser||logUser
 }
 
 var usernameTaken=(arr, username)=>{
@@ -71,6 +73,14 @@ io.on('connection', (socket) => {
             console.log('User already exists or username already taken')
             io.emit('failure', data)
         }        
+    })
+
+    socket.on('find-user', (data)=>{
+        
+        if(findUser(users, data.u, data.log)){
+            console.log('sending user info to main-content...')
+            io.emit('find-user', data)
+        }
     })
 
  

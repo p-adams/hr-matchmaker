@@ -58,6 +58,12 @@
             </div>
         </nav>
         <pre>{{$data}}</pre>
+        <ul>
+            <li v-for="user in userDetails">
+            {{user}}    
+            <li>
+        </ul>
+        <button @click="findUser">Retrieve User Information</button>
             </div>
             
         </template>

@@ -4,7 +4,6 @@ Vue.component('main-content', {
     props:['usr', 'u', 'd'],
     created(){
         var self = this
-        console.log(this.u)
         socket.on('register', (data)=>{
             self.firstname = data.f
             self.lastname = data.l
@@ -13,14 +12,10 @@ Vue.component('main-content', {
             self.sel = data.s
             console.log('show user details: ', data.u, data.p)
         })
-        socket.on('login-success', (data)=>{
-            self.username = data.u
-            self.password = data.p
-            console.log('login', data.u)
-        })
     },
     data(){
         return{
+            userDetails: [],
             firstname: '',
             lastname: '',
             username: '',
@@ -29,15 +24,29 @@ Vue.component('main-content', {
             uName: this.u
         }
     },
+    methods: {
+        findUser(){
+            socket.emit('find-user', {
+                f: this.firstname,
+                l: this.lastname,
+                u: this.username,
+                p: this.password,
+                s: this.sel,
+                log: this.uName
+            })
+            socket.on('find-user', (data)=>{
+                this.userDetails.push(data.f, data.l, data.u, data.p, data.s, data.log)
+            })
+        }
+    },
     computed:{
         showUsername(){
-                
-                if(this.uName==this.uName&&this.uName!=''){        
-                    return this.uName
-                }else{
-                    return this.username
-                }
+            if(this.uName==this.uName&&this.uName!=''){        
+                return this.uName
+            }else{
+                return this.username
             }
+        }
         },
     template: "#main-content"
 })
@@ -133,8 +142,4 @@ new Vue({
     }
 })
 
-/* 
 
-click on login => hide login div and show main content 
-
-*/
