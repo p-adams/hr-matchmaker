@@ -19,12 +19,17 @@ Vue.component('main-content', {
                         e:data.e,
                         s:data.s
                     })
-            /*if(data.s==="Job Seeker"){
-                self.isJobSeeker = true
-             }
-             else if(data.s==="Employer"){
-                 self.isEmployer = true
-             }*/
+                     var accountType = this.loginDetails.map((u)=>{
+                    return u.s
+                })
+                if(accountType[0]==="Job Seeker"){
+                    console.log('User is a job seeker')
+                    self.isJobSeeker = true
+                }
+                else{
+                    console.log('User is an employer')
+                    self.isEmployer = true
+                }
             console.log('show user details: ', data.u, data.p)
         })
           socket.emit('find-user', {
@@ -49,10 +54,18 @@ Vue.component('main-content', {
                         s:user.s
                     })
                 })
-                
+                var accountType = this.loginDetails.map((u)=>{
+                    return u.s
+                })
+                if(accountType[0]==="Job Seeker"){
+                    console.log('User is a job seeker')
+                    this.isJobSeeker = true
+                }
+                else{
+                    console.log('User is an employer')
+                    this.isEmployer = true
+                }
             })
-        
-
     },
     data(){
         return{
