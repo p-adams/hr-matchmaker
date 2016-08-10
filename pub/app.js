@@ -1,5 +1,20 @@
 var socket = io();
 
+
+
+
+Vue.component('employer', {
+    template: '#employer'
+})
+
+Vue.component('job-seeker', {
+    template: '#job-seeker'
+})
+
+Vue.component('user-info', {
+    template: '#user-info'
+})
+
 Vue.component('main-content', {
     props:['usr', 'u', 'd'],
     created(){

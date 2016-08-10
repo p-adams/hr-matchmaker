@@ -48,121 +48,152 @@
         <template id="main-content">
             
             <div>
-            <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                <a class="navbar-brand" href="#">HR Matchmaker</a>
+                <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                    <a class="navbar-brand" href="#">HR Matchmaker</a>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                    <li><a @click="findUser" data-toggle="modal" data-target="#user-info" href="#"><span class="glyphicon glyphicon-user"></span>Welcome: {{showUsername}}</a></li>
+                    <li><a data-toggle="modal" data-target="#create-profile" href="#"><span class="glyphicon glyphicon-user"></span>Create Profile</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                    </ul>
                 </div>
-                <ul class="nav navbar-nav navbar-right">
-                <li><a @click="findUser" data-toggle="modal" data-target="#user-info" href="#"><span class="glyphicon glyphicon-user"></span>Welcome: {{showUsername}}</a></li>
-                <li><a data-toggle="modal" data-target="#create-profile" href="#"><span class="glyphicon glyphicon-user"></span>Create Profile</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-                </ul>
-            </div>
-        </nav>
+            </nav>
         <pre>{{$data}}</pre>
          <!-- User Info Modal -->
-        <div class="container">
-        <div class="modal fade" id="user-info" role="dialog">
-            <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">User Info</h4>
+            <div class="container">
+            <div class="modal fade" id="user-info" role="dialog">
+                <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">User Info</h4>
+                    </div>
+                    <div class="modal-body">     
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Firstname</th>
+                                <th>Lastname</th>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>Email</th>
+                                <th>Account Type</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="user in loginDetails">
+                                <td>{{user.f}}</td>
+                                <td>{{user.l}}</td>
+                                <td>{{user.u}}</td>
+                                <td>{{user.p}}</td>
+                                <td>{{user.e}}</td>
+                                <td>{{user.s}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
-                <div class="modal-body">     
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                            <th>Username</th>
-                            <th>Password</th>
-                            <th>Email</th>
-                            <th>Account Type</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="user in loginDetails">
-                            <td>{{user.f}}</td>
-                            <td>{{user.l}}</td>
-                            <td>{{user.u}}</td>
-                            <td>{{user.p}}</td>
-                            <td>{{user.e}}</td>
-                            <td>{{user.s}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
             </div>
-        </div>
-        </div>
 
-        <div class="container">
-        <div class="modal fade" id="create-profile" role="dialog">
-            <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Create Profile</h4>
-                </div>
-                <div class="modal-body">     
-                   <p>Implement me!</p>
-                   <!-- Create-Profile for Job Seekers -->
-                   <div v-if="isJobSeeker">
-                       job seeker create profile
-                        <form role="form">
-                        <div class="form-group">
-                            <label for="email">Email address:</label>
-                            <input type="email" class="form-control" id="email">
+                <div class="container">
+                <div class="modal fade" id="create-profile" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Create Profile</h4>
                         </div>
-                        <div class="form-group">
-                            <label for="pwd">Password:</label>
-                            <input type="password" class="form-control" id="pwd">
+                        <div class="modal-body">     
+                        <p>Implement me!</p>
+                        <!-- Create-Profile for Employer -->
+                        <div v-if="isEmployer">
+                            <employer></employer>  
+                            </div>
+                        <!-- Create-Profile for Job Seekers -->
+                        <div v-if="isJobSeeker">
+                            <job-seeker></job-seeker>
+                            </div>
                         </div>
-                        <div class="checkbox">
-                            <label><input type="checkbox"> Remember me</label>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                         </div>
-                        <button type="submit" class="btn btn-default">Create Profile</button>
-                        </form>  
                     </div>
-                   <!-- Create-Profile for Job Seekers -->
-                   <div v-if="isEmployer">
-                       Employer create profile
-                        <form role="form">
-                        <div class="form-group">
-                            <label for="email">Email address:</label>
-                            <input type="email" class="form-control" id="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="pwd">Password:</label>
-                            <input type="password" class="form-control" id="pwd">
-                        </div>
-                        <div class="checkbox">
-                            <label><input type="checkbox"> Remember me</label>
-                        </div>
-                        <button type="submit" class="btn btn-default">Create Profile</button>
-                        </form>  
                     </div>
                 </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                
                 </div>
             </div>
-            </div>
-        </div>
-        </div>
-       
-            </div>
-            
         </template>
 
+        <template id="job-seeker">
+            <div>
+                <form role="form">
+                <div class="form-group">
+                    <label for="field">Field:</label>
+                    <input type="text" class="form-control" id="field">
+                </div>
+                <div class="form-group">
+                    <label for="skills">Technologies:</label>
+                    <input type="text" class="form-control" id="skills">
+                </div>
+                    <div class="form-group">
+                    <label for="exp">Relevant Experience:</label>
+                    <input type="text" class="form-control" id="exp">
+                </div>
+                <div class="form-group">
+                    <label for="ed">Education:</label>
+                    <input type="text" class="form-control" id="ed">
+                </div>
+                    <div class="form-group">
+                    <label for="loc">Location:</label>
+                    <input type="text" class="form-control" id="loc">
+                </div>
+                    <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email">
+                </div>
+                <button  class="btn btn-default">Create Profile</button>
+                </form>  
+            </div>
+        </template>
 
+        <template id="employer">
+            <div>
+                <form role="form">
+                    <div class="form-group">
+                        <label for="field">Field</label>
+                        <input type="text" class="form-control" id="field">
+                    </div>
+                    <div class="form-group">
+                        <label for="skills">Required technologies:</label>
+                        <input type="text" class="form-control" id="skills">
+                    </div>
+                        <div class="form-group">
+                        <label for="exp">Required Experience:</label>
+                        <input type="text" class="form-control" id="exp">
+                    </div>
+                    <div class="form-group">
+                        <label for="ed">Required Education:</label>
+                        <input type="text" class="form-control" id="ed">
+                    </div>
+                        <div class="form-group">
+                        <label for="loc">Job Location:</label>
+                        <input type="text" class="form-control" id="loc">
+                    </div>
+                        <div class="form-group">
+                        <label for="email">Company Contact:</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+                    <button  class="btn btn-default">Create Profile</button>
+                </form>  
+            </div>
+        </template>
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.0-beta.6/vue.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.js"></script>
