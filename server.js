@@ -16,11 +16,8 @@ var login = (name, password)=> {
 }
 
 
-var foo = (arr, user) => {
-    if(arr.filter(function(e) {return e.u == user}).length > 0){
-        return arr.filter(function(e){return e.u})
-        }
-}
+
+
 
 var findUser=(arr, username1, username2)=>{
     var regUser = arr.filter(function(e) { console.log('meow', e);return e.u == username1}).length > 0
@@ -45,6 +42,10 @@ var registerNewUser= (firstname, lastname, username, password, selected)=>{
         console.log( newUser[p], users.length)
     }
 }
+
+
+
+
 
 io.on('connection', (socket) => {
     console.log('Someone connected to server');
@@ -83,11 +84,17 @@ io.on('connection', (socket) => {
         }        
     })
 
+//user gets to main page by logging in
+//user needs a way to get his and only his records
     socket.on('find-user', (data)=>{
-        console.log('foo ', foo(users, data.log))
-        data.loginData = foo(users,data.log)
+      
+    var result = users.filter(function( obj ) {
+        return obj.u == 'q';
+    });
+    console.log('the result', result)
         if(findUser(users, data.u, data.log)){
             console.log('sending user info to main-content...')
+            data.r = result
             io.emit('find-user', data)
         }
     })
