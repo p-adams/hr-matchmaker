@@ -3,6 +3,8 @@
         <title>HR Matchmaker</title>
         <script src="/socket.io/socket.io.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="styles.css">     
     </head>
     <body>
@@ -51,24 +53,50 @@
                 <a class="navbar-brand" href="#">HR Matchmaker</a>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span>Welcome: {{showUsername}}</a></li>
+                <li><a @click="findUser" data-toggle="modal" data-target="#myModal" href="#"><span class="glyphicon glyphicon-user"></span>Welcome: {{showUsername}}</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span>Create Profile</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                 </ul>
             </div>
         </nav>
-        <pre>{{$data}}</pre>
-        <ul>
-            <li v-for="user in userDetails">
-            {{user}}    
-            <li>
-        </ul>
-        <ul>
-            <li v-for="user in loginDetails">
-            {{user}}    
-            <li>
-        </ul>
-        <button @click="findUser">Retrieve User Information</button>
+        <!--<pre>{{$data}}</pre>-->
+         <!-- Modal -->
+        <div class="container">
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">User Info</h4>
+                </div>
+                <div class="modal-body">     
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="user in loginDetails">
+                            <td>{{user.f}}</td>
+                            <td>{{user.l}}</td>
+                            <td>{{user.u}}</td>
+                            <td>{{user.p}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+       
             </div>
             
         </template>

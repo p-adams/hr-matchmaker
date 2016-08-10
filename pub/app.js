@@ -42,9 +42,15 @@ Vue.component('main-content', {
                 //array of objects contain user details but 
                 //only if they entered main page by registering
                 data.r.map(function(user){
-                    self.loginDetails.push(user.f, user.l, user.u, user.p, user.s)
+                    self.loginDetails.push({
+                        f:user.f,
+                        l:user.l, 
+                        u:user.u, 
+                        p:user.p,
+                        s:user.s
+                    })
                 })
-                this.userDetails.push(data.f, data.l, data.u, data.p, data.s)
+                //this.userDetails.push(data.f, data.l, data.u, data.p, data.s)
             })
         }
     },
