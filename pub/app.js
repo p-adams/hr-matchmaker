@@ -11,6 +11,20 @@ Vue.component('main-content', {
             self.password = data.p
             self.email = data.e
             self.sel = data.s
+            self.loginDetails.push({
+                        f:data.f,
+                        l:data.l, 
+                        u:data.u, 
+                        p:data.p,
+                        e:data.e,
+                        s:data.s
+                    })
+            /*if(data.s==="Job Seeker"){
+                self.isJobSeeker = true
+             }
+             else if(data.s==="Employer"){
+                 self.isEmployer = true
+             }*/
             console.log('show user details: ', data.u, data.p)
         })
           socket.emit('find-user', {
@@ -25,10 +39,8 @@ Vue.component('main-content', {
             var self = this
             socket.on('find-user', (data)=>{
                 console.log('am i working? ', data.r)
-                //array of objects contain user details but 
-                //only if they entered main page by registering
                 data.r.map(function(user){
-                    self.userDetails.push({
+                    self.loginDetails.push({
                         f:user.f,
                         l:user.l, 
                         u:user.u, 
@@ -37,7 +49,7 @@ Vue.component('main-content', {
                         s:user.s
                     })
                 })
-                //this.userDetails.push(data.f, data.l, data.u, data.p, data.s)
+                
             })
         
 
@@ -52,38 +64,14 @@ Vue.component('main-content', {
             password: '',
             email: '',
             sel: '',
-            uName: this.u
+            uName: this.u,
+            isJobSeeker: false,
+            isEmployer: false
         }
     },
     methods: {
         findUser(){
-
-            socket.emit('find-user', {
-                f: this.firstname,
-                l: this.lastname,
-                u: this.username,
-                p: this.password,
-                e: this.email,
-                s: this.sel,
-                log: this.uName
-            })
-            var self = this
-            socket.on('find-user', (data)=>{
-                console.log(data.r)
-                //array of objects contain user details but 
-                //only if they entered main page by registering
-                data.r.map(function(user){
-                    self.loginDetails.push({
-                        f:user.f,
-                        l:user.l, 
-                        u:user.u, 
-                        p:user.p,
-                        e:user.e,
-                        s:user.s
-                    })
-                })
-                //this.userDetails.push(data.f, data.l, data.u, data.p, data.s)
-            })
+          
         }
     },
     computed:{
