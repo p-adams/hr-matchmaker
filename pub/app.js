@@ -26,6 +26,7 @@ Vue.component('main-content', {
     },
     methods: {
         findUser(){
+            alert(this.uName)
             socket.emit('find-user', {
                 f: this.firstname,
                 l: this.lastname,

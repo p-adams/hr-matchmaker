@@ -3,6 +3,7 @@ var express = require("express"),
     http = require("http"),
     server = http.Server(app),
     socketio = require("socket.io"),
+    _ = require("lodash"),
     io = socketio(server);
 app.use(express.static("pub"));
 
@@ -14,10 +15,19 @@ var login = (name, password)=> {
     employers.push(employer)
 }
 
+
+var foo = (arr, user) => {
+    arr.filter(function(e) { 
+        console.log('foo', e);
+        return e.u == username1
+        }
+        ).length > 0 
+}
+
 var findUser=(arr, username1, username2)=>{
-    var regUser = arr.filter(function(e) { return e.u == username1}).length > 0
-    var logUser = arr.filter(function(e) { return e.p == username2}).length > 0
-    return regUser||logUser
+    var regUser = arr.filter(function(e) { console.log('meow', e);return e.u == username1}).length > 0
+    var logUser = arr.filter(function(e) { console.log('woof', e);return e.u== username2}).length > 0
+    return regUser || logUser
 }
 
 var usernameTaken=(arr, username)=>{
@@ -76,7 +86,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on('find-user', (data)=>{
-        
         if(findUser(users, data.u, data.log)){
             console.log('sending user info to main-content...')
             io.emit('find-user', data)
