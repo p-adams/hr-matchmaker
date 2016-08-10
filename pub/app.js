@@ -16,6 +16,7 @@ Vue.component('main-content', {
     data(){
         return{
             userDetails: [],
+            loginDetails:[],
             firstname: '',
             lastname: '',
             username: '',
@@ -36,7 +37,11 @@ Vue.component('main-content', {
                 log: this.uName
             })
             socket.on('find-user', (data)=>{
-                this.userDetails.push(data.f, data.l, data.u, data.p, data.s, data.log)
+                console.log(data.loginData)//array of objects contain user details
+                data.loginData.map(function(user){
+                    this.loginDetails.push(user.f, user.l, user.u, user.p, user.s)
+                })
+                this.userDetails.push(data.f, data.l, data.u, data.p, data.s)
             })
         }
     },

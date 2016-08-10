@@ -17,11 +17,9 @@ var login = (name, password)=> {
 
 
 var foo = (arr, user) => {
-    arr.filter(function(e) { 
-        console.log('foo', e);
-        return e.u == username1
+    if(arr.filter(function(e) {return e.u == user}).length > 0){
+        return arr.filter(function(e){return e.u})
         }
-        ).length > 0 
 }
 
 var findUser=(arr, username1, username2)=>{
@@ -86,6 +84,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on('find-user', (data)=>{
+        console.log('foo ', foo(users, data.log))
+        data.loginData = foo(users,data.log)
         if(findUser(users, data.u, data.log)){
             console.log('sending user info to main-content...')
             io.emit('find-user', data)
