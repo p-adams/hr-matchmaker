@@ -53,16 +53,16 @@
                 <a class="navbar-brand" href="#">HR Matchmaker</a>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
-                <li><a @click="findUser" data-toggle="modal" data-target="#myModal" href="#"><span class="glyphicon glyphicon-user"></span>Welcome: {{showUsername}}</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span>Create Profile</a></li>
+                <li><a @click="findUser" data-toggle="modal" data-target="#user-info" href="#"><span class="glyphicon glyphicon-user"></span>Welcome: {{showUsername}}</a></li>
+                <li><a data-toggle="modal" data-target="#create-profile" href="#"><span class="glyphicon glyphicon-user"></span>Create Profile</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                 </ul>
             </div>
         </nav>
         <!--<pre>{{$data}}</pre>-->
-         <!-- Modal -->
+         <!-- User Info Modal -->
         <div class="container">
-        <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal fade" id="user-info" role="dialog">
             <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -91,6 +91,26 @@
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="container">
+        <div class="modal fade" id="create-profile" role="dialog">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Create Profile</h4>
+                </div>
+                <div class="modal-body">     
+                   <p>Implement me!</p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Create Profile</button>
                 </div>
             </div>
             </div>
