@@ -12,6 +12,32 @@ Vue.component('main-content', {
             self.sel = data.s
             console.log('show user details: ', data.u, data.p)
         })
+          socket.emit('find-user', {
+                f: this.firstname,
+                l: this.lastname,
+                u: this.username,
+                p: this.password,
+                s: this.sel,
+                log: this.uName
+            })
+            var self = this
+            socket.on('find-user', (data)=>{
+                console.log('am i working? ', data.r)
+                //array of objects contain user details but 
+                //only if they entered main page by registering
+                data.r.map(function(user){
+                    self.loginDetails.push({
+                        f:user.f,
+                        l:user.l, 
+                        u:user.u, 
+                        p:user.p,
+                        s:user.s
+                    })
+                })
+                //this.userDetails.push(data.f, data.l, data.u, data.p, data.s)
+            })
+        
+
     },
     data(){
         return{
@@ -28,7 +54,7 @@ Vue.component('main-content', {
     methods: {
         findUser(){
 
-            socket.emit('find-user', {
+            /*socket.emit('find-user', {
                 f: this.firstname,
                 l: this.lastname,
                 u: this.username,
@@ -51,7 +77,7 @@ Vue.component('main-content', {
                     })
                 })
                 //this.userDetails.push(data.f, data.l, data.u, data.p, data.s)
-            })
+            })*/
         }
     },
     computed:{
