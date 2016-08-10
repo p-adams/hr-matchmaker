@@ -13,3 +13,6 @@ label{
     color: darkred;
     font-weight: bolder;
 }
+.navbar-inverse{
+    background-color: lightblue !important;
+}
