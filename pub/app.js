@@ -85,7 +85,7 @@ Vue.component('main-content', {
     created(){
         var self = this
         var obj = {}
-        socket.emit('fetch-seeker-data', obj)
+        /*socket.emit('fetch-seeker-data', obj)
         socket.on('fetch-seeker-data',(data)=>{
             console.log('fetch-seeker-data', data.s)
             data.s.map(function(data){
@@ -114,7 +114,7 @@ Vue.component('main-content', {
                 email: data.email
             })
             })
-        })
+        })*/
         socket.on('register', (data)=>{
             self.firstname = data.f
             self.lastname = data.l
@@ -204,8 +204,7 @@ Vue.component('main-content', {
                 loc: data.loc,
                 email: data.email
             })
-            //this logs when create profile button is clicked
-            //need to make it so that when user registers or logs, the data is already there
+           
             console.log('job seeker\'s field, ', data.field)
         })
         })
@@ -220,8 +219,7 @@ Vue.component('main-content', {
                 loc: data.loc,
                 email: data.email
             })
-            //this logs when create profile button is clicked
-            //need to make it so that when user registers or logs, the data is already there
+           
             console.log('Company\'s name, ', data.company)
         })
          })

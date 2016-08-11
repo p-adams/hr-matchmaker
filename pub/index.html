@@ -174,15 +174,15 @@
                 <form role="form">
                 <div class="form-group">
                     <label for="field">What is your name?</label>
-                    <input type="text" v-model="name" class="form-control" id="field">
+                    <input type="text" v-model="name" class="form-control" id="field" autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label for="field">You are looking for a job in what field?</label>
-                    <input type="text" v-model="field" class="form-control" id="field">
+                    <input type="text" v-model="field" class="form-control" id="field" autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label for="skills">What Technologies do you have experience with?</label>
-                    <input type="text" v-model="skills" class="form-control" id="skills">
+                    <input type="text" v-model="skills" class="form-control" id="skills" autocomplete="off">
                 </div>
                     <div class="form-group">
                     <label for="exp">How many years of relevant experience do you have?</label>
@@ -198,11 +198,11 @@
                 </div>
                     <div class="form-group">
                     <label for="loc">You are searching for jobs in which location: </label>
-                    <input type="text" v-model="loc" class="form-control" id="loc">
+                    <input type="text" v-model="loc" class="form-control" id="loc" autocomplete="off">
                 </div>
                     <div class="form-group">
                     <label for="email">What is your preferred contact email?</label>
-                    <input type="email" v-model="email" class="form-control" id="email">
+                    <input type="email" v-model="email" class="form-control" id="email" autocomplete="off">
                 </div>
                 <button @click="addSeekerProfile" class="btn btn-default">Create Profile</button>
                 </form>  
@@ -214,15 +214,15 @@
                 <form role="form">
                      <div class="form-group">
                         <label for="field">Company Name: </label>
-                        <input type="text" v-model="company" class="form-control" id="field">
+                        <input type="text" v-model="company" class="form-control" id="field" autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label for="field">Job Title: </label>
-                        <input type="text" v-model="title" class="form-control" id="field">
+                        <input type="text" v-model="title" class="form-control" id="field" autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label for="skills">Applicant must know the following technologies: </label>
-                        <input type="text" v-model="skills" class="form-control" id="skills">
+                        <input type="text" v-model="skills" class="form-control" id="skills" autocomplete="off">
                     </div>
                         <div class="form-group">
                         <label for="exp">Applicant should have how many years of relevant experience:</label>
@@ -238,11 +238,11 @@
                     </div>
                         <div class="form-group">
                         <label for="loc">Job Location:</label>
-                        <input type="text" v-model="loc" class="form-control" id="loc">
+                        <input type="text" v-model="loc" class="form-control" id="loc" autocomplete="off">
                     </div>
                         <div class="form-group">
                         <label for="email">Company Contact:</label>
-                        <input type="email" v-model="email" class="form-control" id="email">
+                        <input type="email" v-model="email" class="form-control" id="email" autocomplete="off">
                     </div>
                     <button  @click="addEmployerProfile" class="btn btn-default">Create Profile</button>
                 </form>  
