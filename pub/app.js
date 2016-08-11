@@ -197,39 +197,12 @@ Vue.component('main-content', {
             var unique = _.uniqBy(data.seek, 'email')
             console.log(unique)
             self.seekerData = unique
-            /*data.seek.map(function(data){
-           
-            self.seekerData.push({
-                name: data.name,
-                field: data.field,
-                skills: data.skills,
-                exp: data.exp,
-                edu: data.edu,
-                loc: data.loc,
-                email: data.email
-            })
-            })*/
-           
             console.log('job seeker\'s field, ', data.field)
-        
         })
          socket.on('employer-profile', (data)=>{
             var unique = _.uniqBy(data.seek, 'email')
             console.log(unique)
             self.employerData = unique
-           /* data.emp.map(function(data){
-            self.employerData.push({
-                company: data.company,
-                title: data.title,
-                skills: data.skills,
-                exp: data.exp,
-                edu: data.edu,
-                loc: data.loc,
-                email: data.email
-            })
-           
-            console.log('Company\'s name, ', data.company)
-        })*/
          })
     },
     template: "#main-content"
