@@ -12,17 +12,26 @@ Vue.component('job-seeker', {
     data(){
         return{
             field: '',
+            skills: '',
+            exp: 0,
             education: [
                 'Bachelors in Computer Science',
                 'Masters in Computer Science', 
                 'PhD in Computer Science', 
-                'Other']
+                'Other'],
+            loc: '',
+            email: ''
         }
     },
     methods: {
         addSeekerProfile(){
             socket.emit('seeker-profile', {
-                field: this.field
+                field: this.field,
+                skills: this.skills,
+                exp: this.exp,
+                ed: this.education,
+                loc: this.loc,
+                email: this.email
             })
         }
     }
@@ -167,7 +176,7 @@ new Vue({
                 this.registrationFailure = true    
                 console.log('user exists')
             })  
-            this.clearForm()    
+            this.clearForm()
         },
         login(){
             this.mainContentVisible = true
@@ -179,12 +188,14 @@ new Vue({
                 this.loginFailure = true
                 console.log("account doesnt exist")
             })
+            
             this.clearForm()
             
         },
         logUser(){
             this.log = true
             this.mainContentVisible = true
+            
         }
     },
     computed: {

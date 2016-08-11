@@ -18,7 +18,7 @@ label{
     font-weight: bolder;
 }
 .navbar-inverse{
-    background-color: lightblue !important;
-    
+    background-color: lightblue !important;   
     border: none !important;
+    width: 100vw;
 }
