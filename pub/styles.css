@@ -1,3 +1,7 @@
+
+body{
+    font-family: 'Lato';
+}
 .form-control{
     width: 300px;
     margin-top: 10px;
@@ -15,4 +19,6 @@ label{
 }
 .navbar-inverse{
     background-color: lightblue !important;
+    
+    border: none !important;
 }
