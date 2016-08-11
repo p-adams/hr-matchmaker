@@ -11,7 +11,12 @@ Vue.component('job-seeker', {
     template: '#job-seeker',
     data(){
         return{
-            field: ''
+            field: '',
+            education: [
+                'Bachelors in Computer Science',
+                'Masters in Computer Science', 
+                'PhD in Computer Science', 
+                'Other']
         }
     },
     methods: {
@@ -23,9 +28,7 @@ Vue.component('job-seeker', {
     }
 })
 
-Vue.component('user-info', {
-    template: '#user-info'
-})
+
 
 Vue.component('main-content', {
     props:['usr', 'u', 'd'],
