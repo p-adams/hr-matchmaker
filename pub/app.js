@@ -2,20 +2,23 @@ var socket = io();
 
 
 var EMPLOYER_DATA = [
-    {title: 'Web Development', skills: 'JavaScript', exp: 5, ed: 'Bachelors in Computer Science', loc: 'San Franciso', email: 'bob@gmail.com'}
+    {name: 'Foo Bar', title: 'Web Development', skills: 'JavaScript', exp: 5, ed: 'Bachelors in Computer Science', loc: 'San Franciso', email: 'bob@gmail.com'}
 ]
 
 var SEEKER_DATA = [
-    {field: 'Software Developer', skills: 'Python', exp: 2, ed: 'Bachelors in Computer Science', loc: 'Ann Arbor', email: 'saadiq@gmail.com'}
+    {name: 'Bar Baz', field: 'Software Developer', skills: 'Python', exp: 2, ed: 'Bachelors in Computer Science', loc: 'Ann Arbor', email: 'saadiq@gmail.com'}
 ]
 
 
 Vue.component('employer', {
     template: '#employer',
-      field: '',
+    data(){
+        return{
+            company: '',
             title: '',
             skills: '',
             exp: 0,
+            edu: '',
             education: [
                 'Bachelors in Computer Science',
                 'Masters in Computer Science', 
@@ -23,16 +26,33 @@ Vue.component('employer', {
                 'Other'],
             loc: '',
             email: ''
+        }
+    },
+    methods: {
+        addEmployerProfile(){
+            socket.emit('employer-profile', {
+                company: this.company,
+                title: this.title,
+                skills: this.skills,
+                exp: this.exp,
+                edu: this.edu,
+                loc: this.loc,
+                email: this.email
+            })
+        }
+    }
+
 })
 
 Vue.component('job-seeker', {
     template: '#job-seeker',
     data(){
         return{
+            name: '',
             field: '',
             skills: '',
             exp: 0,
-            ed: '',
+            edu: '',
             education: [
                 'Bachelors in Computer Science',
                 'Masters in Computer Science', 
@@ -45,10 +65,11 @@ Vue.component('job-seeker', {
     methods: {
         addSeekerProfile(){
             socket.emit('seeker-profile', {
+                name: this.name,
                 field: this.field,
                 skills: this.skills,
                 exp: this.exp,
-                ed: this.education,
+                edu: this.edu,
                 loc: this.loc,
                 email: this.email
             })
@@ -62,6 +83,23 @@ Vue.component('main-content', {
     props:['usr', 'u'],
     created(){
         var self = this
+        var obj = {}
+        socket.emit('fetch-data', obj)
+        socket.on('fetch-data',(data)=>{
+            console.log('fetch-data', data.s)
+            data.s.map(function(data){
+                self.seekerData.push({
+                name: data.name,
+                field: data.field,
+                skills: data.skills,
+                exp: data.exp,
+                edu: data.edu,
+                loc: data.loc,
+                email: data.email
+            })
+            })
+            
+        })
         socket.on('register', (data)=>{
             self.firstname = data.f
             self.lastname = data.l
@@ -139,7 +177,20 @@ Vue.component('main-content', {
         }
     },
     mounted(){
+        var self = this
         socket.on('seeker-profile', (data)=>{
+            data.seek.map(function(data){})
+            self.seekerData.push({
+                name: data.name,
+                field: data.field,
+                skills: data.skills,
+                exp: data.exp,
+                edu: data.edu,
+                loc: data.loc,
+                email: data.email
+            })
+            //this logs when create profile button is clicked
+            //need to make it so that when user registers or logs, the data is already there
             console.log('job seeker\'s field, ', data.field)
         })
     },

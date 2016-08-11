@@ -74,10 +74,11 @@
                         <ul class="list-group">
                             <label>Current Profiles</label>
                             <li class="list-group-item" v-for="data in employerData">
+                                <span>Company: {{data.company}}</span><br>
                                <span>Position: {{data.title}}</span><br>
                                <span>Applicant must know: {{data.skills}}</span><br>
                                <span>Required experience: {{data.exp}} year(s)</span><br>
-                               <span>Required education: {{data.ed}}</span><br>
+                               <span>Required education: {{data.edu}}</span><br>
                                <span>Job location: {{data.loc}}</span><br>
                                <span>Employer contact: <a href="#">{{data.email}}</a></span>
                             </li>
@@ -87,12 +88,13 @@
                     <ul class="list-group">
                         <label>Current Profiles</label>
                         <li class="list-group-item" v-for="data in seekerData">
-                            <span>Position: {{data.field}}</span><br>
-                            <span>Applicant must know: {{data.skills}}</span><br>
-                            <span>Required experience: {{data.exp}} year(s)</span><br>
-                            <span>Required education: {{data.ed}}</span><br>
-                            <span>Job location: {{data.loc}}</span><br>
-                            <span>Employer contact: <a href="#">{{data.email}}</a></span>
+                            <span>Name: {{data.name}}</span><br>
+                            <span>Field: {{data.field}}</span><br>
+                            <span>Skills: {{data.skills}}</span><br>
+                            <span>Experience: {{data.exp}} year(s)</span><br>
+                            <span>Education: {{data.edu}}</span><br>
+                            <span>Location: {{data.loc}}</span><br>
+                            <span>Contact: <a href="#">{{data.email}}</a></span>
                         </li>
                     </ul>
                 </div>
@@ -171,6 +173,10 @@
             <div>
                 <form role="form">
                 <div class="form-group">
+                    <label for="field">What is your name?</label>
+                    <input type="text" v-model="name" class="form-control" id="field">
+                </div>
+                <div class="form-group">
                     <label for="field">You are looking for a job in what field?</label>
                     <input type="text" v-model="field" class="form-control" id="field">
                 </div>
@@ -186,7 +192,7 @@
                 </div>
                 <div class="form-group">
                     <label for="ed">Education</label>
-                    <select v-model="ed" class="form-control">
+                    <select v-model="edu" class="form-control">
                         <option v-for="ed in education">{{ed}}</option>
                     </select>
                 </div>
@@ -206,6 +212,10 @@
         <template id="employer">
             <div>
                 <form role="form">
+                     <div class="form-group">
+                        <label for="field">Company Name: </label>
+                        <input type="text" v-model="company" class="form-control" id="field">
+                    </div>
                     <div class="form-group">
                         <label for="field">Job Title: </label>
                         <input type="text" v-model="title" class="form-control" id="field">
@@ -222,8 +232,8 @@
                          </select>
                     </div>
                     <div class="form-group">
-                        <label for="ed">Education required for this position:</label>
-                        <select v-model="ed" class="form-control">
+                        <label for="edu">Education required for this position:</label>
+                        <select v-model="edu" class="form-control">
                             <option v-for="ed in education">{{ed}}</option>
                         </select>
                     </div>

@@ -9,6 +9,7 @@ app.use(express.static("pub"));
 
 
 var users = []
+var seekerProfiles = []
 
 var login = (name, password)=> {
     var employer = {name: name, password: password}
@@ -35,12 +36,25 @@ var userExists=(arr, username, password)=>{
     return isUser&&isPass   
 }
 
-var registerNewUser= (firstname, lastname, username, password, email,selected)=>{
+var registerNewUser=(firstname, lastname, username, password, email,selected)=>{
     var newUser = {f: firstname, l: lastname, u: username, p: password, e: email, s: selected}
     users.push(newUser)
     for(p in newUser){
         console.log( newUser[p], users.length)
     }
+}
+
+var registerSeekerProfile=(name, field, skills, exp, edu, loc, email)=>{
+    var newSeekerProfile = {
+        name: name,
+        field: field,
+        skills: skills,
+        exp: exp,
+        edu: edu,
+        loc: loc,
+        email: email,
+    }
+    seekerProfiles.push(newSeekerProfile)
 }
 
 
@@ -49,7 +63,11 @@ var registerNewUser= (firstname, lastname, username, password, email,selected)=>
 
 io.on('connection', (socket) => {
     console.log('Someone connected to server');
-
+    var profiles = {s: seekerProfiles}
+    socket.on('fetch-data', (data)=>{
+        io.emit('fetch-data', profiles )
+    })
+    
     socket.on('check-user', (data)=>{
          console.log('from check-user', data.u, data.p)
          console.log(userExists(users, data.u, data.p))
@@ -95,7 +113,17 @@ io.on('connection', (socket) => {
     })
 
     socket.on('seeker-profile', (data)=>{
-        io.emit('seeker-profile', data)
+        registerSeekerProfile(data.name, data.field, data.skills, data.exp, data.edu, data.loc, data.email)
+        data.seek = seekerProfiles
+        seekerProfiles.map(function(p){
+            console.log('# seeker profiles: ', p)
+        })
+    
+        io.emit('onload', data)
+    })
+
+    socket.on('employer-profile', (data)=>{
+        io.emit('employer-profile', data)
     })
 
 
