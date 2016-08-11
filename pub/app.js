@@ -1,10 +1,28 @@
 var socket = io();
 
 
+var EMPLOYER_DATA = [
+    {title: 'Web Development', skills: 'JavaScript', exp: 5, ed: 'Bachelors in Computer Science', loc: 'San Franciso', email: 'bob@gmail.com'}
+]
+
+var SEEKER_DATA = [
+    {field: 'Software Developer', skills: 'Python', exp: 2, ed: 'Bachelors in Computer Science', loc: 'Ann Arbor', email: 'saadiq@gmail.com'}
+]
 
 
 Vue.component('employer', {
-    template: '#employer'
+    template: '#employer',
+      field: '',
+            title: '',
+            skills: '',
+            exp: 0,
+            education: [
+                'Bachelors in Computer Science',
+                'Masters in Computer Science', 
+                'PhD in Computer Science', 
+                'Other'],
+            loc: '',
+            email: ''
 })
 
 Vue.component('job-seeker', {
@@ -14,6 +32,7 @@ Vue.component('job-seeker', {
             field: '',
             skills: '',
             exp: 0,
+            ed: '',
             education: [
                 'Bachelors in Computer Science',
                 'Masters in Computer Science', 
@@ -40,7 +59,7 @@ Vue.component('job-seeker', {
 
 
 Vue.component('main-content', {
-    props:['usr', 'u', 'd'],
+    props:['usr', 'u'],
     created(){
         var self = this
         socket.on('register', (data)=>{
@@ -91,7 +110,8 @@ Vue.component('main-content', {
     },
     data(){
         return{
-            userDetails: [],
+            employerData: EMPLOYER_DATA,
+            seekerData: SEEKER_DATA,
             loginDetails:[],
             firstname: '',
             lastname: '',

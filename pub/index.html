@@ -46,9 +46,9 @@
    
         </div>
 
-        <template id="main-content">
+    <template id="main-content">
             
-            <div>
+        <div class="root">
                 <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
@@ -61,7 +61,43 @@
                     </ul>
                 </div>
             </nav>
-        <pre>{{$data}}</pre>
+        <!--<pre>{{$data}}</pre>-->
+            <div class="container">
+                <div class="jumbotron">
+                        <div class="input-group">
+                            <input type="text" id="browse" class="browse form-control" placeholder="Filter profiles by field, skills, experience, or location...">
+                            <!-- <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Browse</button>
+                            </span> -->
+                        </div>    
+                    <div v-if="isJobSeeker" class="display-employer-profiles">
+                        <ul class="list-group">
+                            <label>Current Profiles</label>
+                            <li class="list-group-item" v-for="data in employerData">
+                               <span>Position: {{data.title}}</span><br>
+                               <span>Applicant must know: {{data.skills}}</span><br>
+                               <span>Required experience: {{data.exp}} year(s)</span><br>
+                               <span>Required education: {{data.ed}}</span><br>
+                               <span>Job location: {{data.loc}}</span><br>
+                               <span>Employer contact: <a href="#">{{data.email}}</a></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div v-if="isEmployer" class="display-seeker-profiles">
+                    <ul class="list-group">
+                        <label>Current Profiles</label>
+                        <li class="list-group-item" v-for="data in seekerData">
+                            <span>Position: {{data.field}}</span><br>
+                            <span>Applicant must know: {{data.skills}}</span><br>
+                            <span>Required experience: {{data.exp}} year(s)</span><br>
+                            <span>Required education: {{data.ed}}</span><br>
+                            <span>Job location: {{data.loc}}</span><br>
+                            <span>Employer contact: <a href="#">{{data.email}}</a></span>
+                        </li>
+                    </ul>
+                </div>
+                </div>
+            </div>
          <!-- User Info Modal -->
             <div class="container">
             <div class="modal fade" id="user-info" role="dialog">
@@ -112,7 +148,6 @@
                         <h4 class="modal-title">Create Profile</h4>
                         </div>
                         <div class="modal-body">     
-                        <p>Implement me!</p>
                         <!-- Create-Profile for Employer -->
                         <div v-if="isEmployer">
                             <employer></employer>  
@@ -129,8 +164,8 @@
                     </div>
                 </div>
                 </div>
-            </div>
-        </template>
+        </div>
+    </template>
 
         <template id="job-seeker">
             <div>
@@ -173,29 +208,34 @@
                 <form role="form">
                     <div class="form-group">
                         <label for="field">Job Title: </label>
-                        <input type="text" class="form-control" id="field">
+                        <input type="text" v-model="title" class="form-control" id="field">
                     </div>
                     <div class="form-group">
                         <label for="skills">Applicant must know the following technologies: </label>
-                        <input type="text" class="form-control" id="skills">
+                        <input type="text" v-model="skills" class="form-control" id="skills">
                     </div>
                         <div class="form-group">
                         <label for="exp">Applicant should have how many years of relevant experience:</label>
-                        <input type="text" class="form-control" id="exp">
+                        <input type="text" v-model="exp" class="form-control" id="exp">
+                         <select v-model="exp" class="form-control">
+                            <option v-for="(index, n) in 30">{{n}}</option>
+                         </select>
                     </div>
                     <div class="form-group">
                         <label for="ed">Education required for this position:</label>
-                        <input type="text" class="form-control" id="ed">
+                        <select v-model="ed" class="form-control">
+                            <option v-for="ed in education">{{ed}}</option>
+                        </select>
                     </div>
                         <div class="form-group">
                         <label for="loc">Job Location:</label>
-                        <input type="text" class="form-control" id="loc">
+                        <input type="text" v-model="loc" class="form-control" id="loc">
                     </div>
                         <div class="form-group">
                         <label for="email">Company Contact:</label>
-                        <input type="email" class="form-control" id="email">
+                        <input type="email" v-model="email" class="form-control" id="email">
                     </div>
-                    <button  class="btn btn-default">Create Profile</button>
+                    <button  @click="addEmployerProfile" class="btn btn-default">Create Profile</button>
                 </form>  
             </div>
         </template>
