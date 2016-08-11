@@ -163,8 +163,8 @@ Vue.component('main-content', {
     },
     data(){
         return{
-            employerData: EMPLOYER_DATA,
-            seekerData: SEEKER_DATA,
+            employerData: '',
+            seekerData: '',
             loginDetails:[],
             firstname: '',
             lastname: '',
@@ -194,7 +194,11 @@ Vue.component('main-content', {
     mounted(){
         var self = this
         socket.on('seeker-profile', (data)=>{
-            data.seek.map(function(data){
+            var unique = _.uniqBy(data.seek, 'email')
+            console.log(unique)
+            self.seekerData = unique
+            /*data.seek.map(function(data){
+           
             self.seekerData.push({
                 name: data.name,
                 field: data.field,
@@ -204,12 +208,16 @@ Vue.component('main-content', {
                 loc: data.loc,
                 email: data.email
             })
+            })*/
            
             console.log('job seeker\'s field, ', data.field)
-        })
+        
         })
          socket.on('employer-profile', (data)=>{
-            data.emp.map(function(data){
+            var unique = _.uniqBy(data.seek, 'email')
+            console.log(unique)
+            self.employerData = unique
+           /* data.emp.map(function(data){
             self.employerData.push({
                 company: data.company,
                 title: data.title,
@@ -221,7 +229,7 @@ Vue.component('main-content', {
             })
            
             console.log('Company\'s name, ', data.company)
-        })
+        })*/
          })
     },
     template: "#main-content"
