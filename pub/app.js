@@ -6,7 +6,7 @@ var EMPLOYER_DATA = [
 ]
 
 var SEEKER_DATA = [
-    {name: 'Bar Baz', field: 'Software Developer', skills: 'Python', exp: 2, ed: 'Bachelors in Computer Science', loc: 'Ann Arbor', email: 'saadiq@gmail.com'}
+    {company: 'Bar Baz', field: 'Software Developer', skills: 'Python', exp: 2, ed: 'Bachelors in Computer Science', loc: 'Ann Arbor', email: 'saadiq@gmail.com'}
 ]
 
 
@@ -30,6 +30,7 @@ Vue.component('employer', {
     },
     methods: {
         addEmployerProfile(){
+            alert(this.company)
             socket.emit('employer-profile', {
                 company: this.company,
                 title: this.title,
@@ -84,9 +85,9 @@ Vue.component('main-content', {
     created(){
         var self = this
         var obj = {}
-        socket.emit('fetch-data', obj)
-        socket.on('fetch-data',(data)=>{
-            console.log('fetch-data', data.s)
+        socket.emit('fetch-seeker-data', obj)
+        socket.on('fetch-seeker-data',(data)=>{
+            console.log('fetch-seeker-data', data.s)
             data.s.map(function(data){
                 self.seekerData.push({
                 name: data.name,
@@ -98,7 +99,21 @@ Vue.component('main-content', {
                 email: data.email
             })
             })
-            
+        })
+        socket.emit('fetch-employer-data', obj)
+        socket.on('fetch-employer-data',(data)=>{
+            console.log('fetch-employer-data', data.e)
+            data.e.map(function(data){
+                self.employerData.push({
+                company: data.company,
+                title: data.title,
+                skills: data.skills,
+                exp: data.exp,
+                edu: data.edu,
+                loc: data.loc,
+                email: data.email
+            })
+            })
         })
         socket.on('register', (data)=>{
             self.firstname = data.f
@@ -179,7 +194,7 @@ Vue.component('main-content', {
     mounted(){
         var self = this
         socket.on('seeker-profile', (data)=>{
-            data.seek.map(function(data){})
+            data.seek.map(function(data){
             self.seekerData.push({
                 name: data.name,
                 field: data.field,
@@ -193,6 +208,23 @@ Vue.component('main-content', {
             //need to make it so that when user registers or logs, the data is already there
             console.log('job seeker\'s field, ', data.field)
         })
+        })
+         socket.on('employer-profile', (data)=>{
+            data.emp.map(function(data){
+            self.employerData.push({
+                company: data.company,
+                title: data.title,
+                skills: data.skills,
+                exp: data.exp,
+                edu: data.edu,
+                loc: data.loc,
+                email: data.email
+            })
+            //this logs when create profile button is clicked
+            //need to make it so that when user registers or logs, the data is already there
+            console.log('Company\'s name, ', data.company)
+        })
+         })
     },
     template: "#main-content"
 })
