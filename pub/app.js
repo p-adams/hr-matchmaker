@@ -1,5 +1,6 @@
 var socket = io();
 
+var bus = new Vue()
 
 var EMPLOYER_DATA = [
     {name: 'Foo Bar', title: 'Web Development', skills: 'JavaScript', exp: 5, ed: 'Bachelors in Computer Science', loc: 'San Franciso', email: 'bob@gmail.com'}
@@ -25,12 +26,21 @@ Vue.component('employer', {
                 'PhD in Computer Science', 
                 'Other'],
             loc: '',
-            email: ''
+            email: '',
+            submitted: false
         }
     },
     methods: {
+        clearData(){
+            this.company = ''
+            this.title = ''
+            this.skills = ''
+            this.exp = ''
+            this.edu = ''
+            this.loc = ''
+            this.email = ''
+        },
         addEmployerProfile(){
-            alert(this.company)
             socket.emit('employer-profile', {
                 company: this.company,
                 title: this.title,
@@ -40,6 +50,8 @@ Vue.component('employer', {
                 loc: this.loc,
                 email: this.email
             })
+            this.submitted = true
+            this.clearData()
         }
     }
 
@@ -60,10 +72,20 @@ Vue.component('job-seeker', {
                 'PhD in Computer Science', 
                 'Other'],
             loc: '',
-            email: ''
+            email: '',
+            submitted: false,
         }
     },
     methods: {
+        clearData(){
+            this.name = ''
+            this.field = ''
+            this.skills = ''
+            this.exp = ''
+            this.edu = ''
+            this.loc = ''
+            this.email = ''
+        },
         addSeekerProfile(){
             socket.emit('seeker-profile', {
                 name: this.name,
@@ -74,6 +96,9 @@ Vue.component('job-seeker', {
                 loc: this.loc,
                 email: this.email
             })
+            this.submitted = true
+            this.clearData()
+
         }
     }
 })
@@ -85,36 +110,6 @@ Vue.component('main-content', {
     created(){
         var self = this
         var obj = {}
-        /*socket.emit('fetch-seeker-data', obj)
-        socket.on('fetch-seeker-data',(data)=>{
-            console.log('fetch-seeker-data', data.s)
-            data.s.map(function(data){
-                self.seekerData.push({
-                name: data.name,
-                field: data.field,
-                skills: data.skills,
-                exp: data.exp,
-                edu: data.edu,
-                loc: data.loc,
-                email: data.email
-            })
-            })
-        })
-        socket.emit('fetch-employer-data', obj)
-        socket.on('fetch-employer-data',(data)=>{
-            console.log('fetch-employer-data', data.e)
-            data.e.map(function(data){
-                self.employerData.push({
-                company: data.company,
-                title: data.title,
-                skills: data.skills,
-                exp: data.exp,
-                edu: data.edu,
-                loc: data.loc,
-                email: data.email
-            })
-            })
-        })*/
         socket.on('register', (data)=>{
             self.firstname = data.f
             self.lastname = data.l
@@ -174,7 +169,8 @@ Vue.component('main-content', {
             sel: '',
             uName: this.u,
             isJobSeeker: false,
-            isEmployer: false
+            isEmployer: false,
+            visible: true,
         }
     },
     methods: {
@@ -229,8 +225,8 @@ new Vue({
     },
     methods: {
         clearForm(){
-            //this.firstname = ''
-            //this.lastname = ''
+            this.firstname = ''
+            this.lastname = ''
             this.createUsr = ''
             this.createPass = ''
             this.email=''

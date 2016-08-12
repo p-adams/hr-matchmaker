@@ -25,10 +25,31 @@ label{
     background-color: lightblue !important;   
     border: none !important;
 }
-.display-employer-profiles{
-    border: 2px solid darkmagenta;
+.submitted{
+    color: green;
 }
-.display-seeker-profiles{
-    border: 2px solid darkgreen;
+.list-group{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 10px 10px 5px #888888;
 }
+.list-group-item{
+    
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 10px 10px 5px #888888;
+}
+.profile{
+    background-color: white !important; 
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 10px 10px 5px #888888;
+    height: 75px;
+}
+#pro{
+    font-size: 35px !important;
+    color: darkslategray !important;
+    margin-left: 10px !important;
+}
+
 

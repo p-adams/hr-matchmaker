@@ -61,18 +61,14 @@
                     </ul>
                 </div>
             </nav>
-        <!--<pre>{{$data}}</pre>-->
             <div class="container">
                 <div class="jumbotron">
                         <div class="input-group">
                             <input type="text" id="browse" class="browse form-control" placeholder="Filter profiles by field, skills, experience, or location...">
-                            <!-- <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">Browse</button>
-                            </span> -->
                         </div>    
                     <div v-if="isJobSeeker" class="display-employer-profiles">
                         <ul class="list-group">
-                            <label>Current Profiles</label>
+                           <div class="profile"><h3 id="pro">Current HR Profiles</h3></div>
                             <li class="list-group-item" v-for="data in employerData">
                                <span>Company: {{data.company}}</span><br>
                                <span>Position: {{data.title}}</span><br>
@@ -86,7 +82,7 @@
                     </div>
                     <div v-if="isEmployer" class="display-seeker-profiles">
                     <ul class="list-group">
-                        <label>Current Profiles</label>
+                        <div class="profile"><label id="pro">Current Job Seeker Profiles</label></div>
                         <li class="list-group-item" v-for="data in seekerData">
                             <span>Name: {{data.name}}</span><br>
                             <span>Field: {{data.field}}</span><br>
@@ -107,7 +103,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">User Info</h4>
+                    <h4 class="modal-title">Current Users</h4>
                     </div>
                     <div class="modal-body">     
                         <table class="table table-bordered">
@@ -116,7 +112,6 @@
                                 <th>Firstname</th>
                                 <th>Lastname</th>
                                 <th>Username</th>
-                                <th>Password</th>
                                 <th>Email</th>
                                 <th>Account Type</th>
                             </tr>
@@ -126,7 +121,6 @@
                                 <td>{{user.f}}</td>
                                 <td>{{user.l}}</td>
                                 <td>{{user.u}}</td>
-                                <td>{{user.p}}</td>
                                 <td>{{user.e}}</td>
                                 <td>{{user.s}}</td>
                             </tr>
@@ -140,9 +134,9 @@
                 </div>
             </div>
             </div>
-
-                <div class="container">
-                <div class="modal fade" id="create-profile" role="dialog">
+                
+                <div  class="container">
+                <div  class="modal fade" id="create-profile" role="dialog">
                     <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -160,12 +154,13 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                     </div>
                 </div>
                 </div>
+                
         </div>
     </template>
 
@@ -204,6 +199,7 @@
                     <label for="email">What is your preferred contact email?</label>
                     <input type="email" v-model="email" class="form-control" id="email" autocomplete="off">
                 </div>
+                <h5 v-if="submitted" :class="{'submitted' : submitted}">Profile Submitted!</h5>
                 <button @click="addSeekerProfile" class="btn btn-default">Create Profile</button>
                 </form>  
             </div>
@@ -244,6 +240,7 @@
                         <label for="email">Company Contact:</label>
                         <input type="email" v-model="email" class="form-control" id="email" autocomplete="off">
                     </div>
+                    <h5 v-if="submitted" :class="{'submitted' : submitted}">Profile Submitted!</h5>
                     <button  @click="addEmployerProfile" class="btn btn-default">Create Profile</button>
                 </form>  
             </div>
