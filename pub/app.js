@@ -1,15 +1,5 @@
 var socket = io();
 
-var bus = new Vue()
-
-var EMPLOYER_DATA = [
-    {name: 'Foo Bar', title: 'Web Development', skills: 'JavaScript', exp: 5, ed: 'Bachelors in Computer Science', loc: 'San Franciso', email: 'bob@gmail.com'}
-]
-
-var SEEKER_DATA = [
-    {company: 'Bar Baz', field: 'Software Developer', skills: 'Python', exp: 2, ed: 'Bachelors in Computer Science', loc: 'Ann Arbor', email: 'saadiq@gmail.com'}
-]
-
 
 Vue.component('employer', {
     template: '#employer',
@@ -196,7 +186,7 @@ Vue.component('main-content', {
             console.log('job seeker\'s field, ', data.field)
         })
          socket.on('employer-profile', (data)=>{
-            var unique = _.uniqBy(data.seek, 'email')
+            var unique = _.uniqBy(data.emp, 'email')
             console.log(unique)
             self.employerData = unique
          })

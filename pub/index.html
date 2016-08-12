@@ -13,8 +13,8 @@
 
 
              <div v-if="!mainContentVisible" class="jumbotron">
-                 <h3>Welcome to HR Matchmaker</h3>
-                <h5>Like Match.com but for front-end job seekers and employers</h5>
+                <h3>Welcome to HR Matchmaker</h3>
+                <h5>Like Match.com but for job seekers and employers</h5><br>
                 <h5>Fill out form below to create an account</h5>
                 <h6>Already a user? <a href="#" @click="logUser">login</a></h6>
                 <input type="text" class="form-control" v-model="firstname" placeholder="firstname..." autofocus>
@@ -52,7 +52,7 @@
                 <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                    <a class="navbar-brand" href="#">HR Matchmaker</a>
+                        <a class="navbar-brand" href="#">HR Matchmaker</a>
                     </div>
                     <ul class="nav navbar-nav navbar-right">
                     <li><a @click="findUser" data-toggle="modal" data-target="#user-info" href="#"><span class="glyphicon glyphicon-user"></span>Welcome: {{showUsername}}</a></li>
@@ -63,9 +63,7 @@
             </nav>
             <div class="container">
                 <div class="jumbotron">
-                        <div class="input-group">
-                            <input type="text" id="browse" class="browse form-control" placeholder="Filter profiles by field, skills, experience, or location...">
-                        </div>    
+                           
                     <div v-if="isJobSeeker" class="display-employer-profiles">
                         <ul class="list-group">
                            <div class="profile"><h3 id="pro">Current HR Profiles</h3></div>
